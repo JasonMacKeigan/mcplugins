@@ -1,0 +1,10 @@
+name: HomeTeleportPlugin
+main: com.jsonmack.mcplugins.plugin.HomeTeleportPlugin.java
+version: 1.0.0
+author: BitLong
+commands:
+  basic:
+    description: Teleports the player to their bed location
+    usage: /<command>
+    permission: HomeTeleportPlugin.basic
+    permission-message: You don't have <permission>
