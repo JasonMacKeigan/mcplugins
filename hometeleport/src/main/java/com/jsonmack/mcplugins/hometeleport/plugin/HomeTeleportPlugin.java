@@ -1,4 +1,4 @@
-package com.jsonmack.mcplugins.plugin;
+package com.jsonmack.mcplugins.hometeleport.plugin;
 
 import com.sun.istack.internal.NotNull;
 import org.bukkit.Location;
@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class HomeTeleportPlugin extends JavaPlugin {
+
+    private static final int MINIMUM_LEVEL_COST = 0;
 
     @Override
     public void onLoad() {
@@ -34,29 +36,31 @@ public class HomeTeleportPlugin extends JavaPlugin {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (command.getName().equalsIgnoreCase("home")) {
-            Server server = sender.getServer();
+            if (sender instanceof Player) {
+                Player player = (Player) sender;
 
-            Player player = server.getPlayer(sender.getName());
+                if (player.isDead()) {
+                    return false;
+                }
+                int level = player.getLevel();
 
-            if (player == null) {
-                return false;
+                int levelCost = getConfig().getInt("level-cost", 0);
+
+                if (level < levelCost) {
+                    player.sendMessage("You must have a minimum level of 1 to teleport home.");
+                    return false;
+                }
+                Location bedLocation = player.getBedSpawnLocation();
+
+                if (bedLocation == null) {
+                    player.sendMessage("Odd, you don't seem to have a bed spawned or haven't slept in it yet.");
+                    return false;
+                }
+                player.giveExpLevels(-1);
+                player.teleport(bedLocation);
+                player.sendMessage("You have teleported home at the cost of a level.");
+                return true;
             }
-            int level = player.getLevel();
-
-            if (level < 1) {
-                player.sendMessage("You must have a minimum level of 1 to teleport home.");
-                return false;
-            }
-            Location bedLocation = player.getBedSpawnLocation();
-
-            if (bedLocation == null) {
-                player.sendMessage("Odd, you don't seem to have a bed spawned or haven't slept in it yet.");
-                return false;
-            }
-            player.giveExpLevels(-1);
-            player.teleport(bedLocation);
-            player.sendMessage("You have teleported home at the cost of a level.");
-            return true;
         }
 
         return super.onCommand(sender, command, label, args);

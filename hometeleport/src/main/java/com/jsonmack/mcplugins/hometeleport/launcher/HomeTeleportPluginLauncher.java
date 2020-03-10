@@ -1,4 +1,4 @@
-package com.jsonmack.mcplugins.launcher;
+package com.jsonmack.mcplugins.hometeleport.launcher;
 
 public class HomeTeleportPluginLauncher {
 
