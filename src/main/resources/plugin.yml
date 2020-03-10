@@ -1,5 +1,5 @@
 name: HomeTeleportPlugin
-main: com.jsonmack.mcplugins.plugin.HomeTeleportPlugin.java
+main: com.jsonmack.mcplugins.plugin.HomeTeleportPlugin
 version: 1.0.0
 author: BitLong
 commands:
