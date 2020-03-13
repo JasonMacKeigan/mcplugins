@@ -1,0 +1,24 @@
+harvest_xp.wheat.material: WHEAT
+harvest_xp.wheat.experience: 1
+harvest_xp.wheat.harvest_required: 20
+
+harvest_xp.potato.material: POTATO
+harvest_xp.potato.experience: 1
+harvest_xp.potato.harvest_required: 20
+
+harvest_xp.carrot.material: CARROT
+harvest_xp.carrot.experience: 1
+harvest_xp.carrot.harvest_required: 20
+
+harvest_xp.beetroot.material: BEETROOT
+harvest_xp.beetroot.experience: 1
+harvest_xp.beetroot.harvest_required: 20
+
+harvest_xp.pumpkin.material: PUMPKIN
+harvest_xp.pumpkin.experience: 1
+harvest_xp.pumpkin.harvest_required: 10
+
+harvest_xp.melon.material: MELON
+harvest_xp.melon.experience: 1
+harvest_xp.melon.harvest_required: 10
+

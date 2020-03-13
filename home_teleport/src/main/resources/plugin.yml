@@ -1,7 +1,7 @@
 name: HomeTeleportPlugin
-main: com.jsonmack.mcplugins.plugin.HomeTeleportPlugin
+main: com.jsonmack.mcplugins.hometeleport.plugin.HomeTeleportPlugin
 version: 1.0.0
-api-version: 1.15
+api-version: "1.15"
 author: BitLong
 commands:
   home:
