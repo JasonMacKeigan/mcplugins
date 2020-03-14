@@ -38,6 +38,15 @@ public class HarvestCommandExecutor implements TabExecutor {
 
         String value = strings[1];
 
+        if (key.equals("hoe_tool_required")) { //TODO replace with non-magic value
+            boolean hoeToolRequired = Boolean.parseBoolean(value);
+
+            commandSender.sendMessage(String.format("A hoe tool %s required.",
+                    hoeToolRequired ? "is now" : "is no longer"));
+            plugin.setConfig(config.setHoeToolRequired(hoeToolRequired))
+                    .writeConfig().reloadConfig();
+            return true;
+        }
         try {
             HarvestMaterialConfigKey materialConfigKey = HarvestMaterialConfigKey.getAllKeys().stream().filter(config ->
                     key.contains(config.getKeyPrefix())).findAny().orElse(null);
@@ -103,6 +112,7 @@ public class HarvestCommandExecutor implements TabExecutor {
             results.add(key.getExperienceKey());
             results.add(key.getHarvestRequiredKey());
         }
+        results.add("hoe_tool_required");
         return results;
     }
 
