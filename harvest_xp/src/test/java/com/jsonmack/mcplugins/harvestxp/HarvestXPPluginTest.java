@@ -1,8 +1,6 @@
 package com.jsonmack.mcplugins.harvestxp;
 
 import com.jsonmack.mcplugins.harvestxp.config.HarvestConfig;
-import com.jsonmack.mcplugins.harvestxp.config.HarvestMaterialConfig;
-import com.jsonmack.mcplugins.harvestxp.config.HarvestMaterialConfigDecoder;
 import com.jsonmack.mcplugins.harvestxp.config.HarvestMaterialConfigKey;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -15,7 +13,6 @@ import org.junit.runners.JUnit4;
 
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.Set;
 
 /**
  * Created by Jason MK on 2020-03-13 at 3:36 p.m.

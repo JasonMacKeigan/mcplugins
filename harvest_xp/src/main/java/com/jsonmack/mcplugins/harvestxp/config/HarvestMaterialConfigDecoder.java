@@ -3,11 +3,8 @@ package com.jsonmack.mcplugins.harvestxp.config;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Created by Jason MK on 2020-03-13 at 1:34 p.m.

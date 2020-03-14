@@ -31,7 +31,7 @@ public class HomeTeleportPlugin extends JavaPlugin {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equalsIgnoreCase("home")) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;

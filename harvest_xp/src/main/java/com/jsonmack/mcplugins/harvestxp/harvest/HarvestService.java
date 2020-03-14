@@ -1,6 +1,5 @@
 package com.jsonmack.mcplugins.harvestxp.harvest;
 
-import com.jsonmack.mcplugins.harvestxp.config.HarvestMaterialConfig;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -9,9 +8,6 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * Created by Jason MK on 2020-03-13 at 2:13 p.m.

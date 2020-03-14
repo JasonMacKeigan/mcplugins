@@ -2,8 +2,6 @@ package com.jsonmack.mcplugins.harvestxp.config;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
-import org.bukkit.configuration.serialization.SerializableAs;
 
 import java.util.Map;
 import java.util.Set;
