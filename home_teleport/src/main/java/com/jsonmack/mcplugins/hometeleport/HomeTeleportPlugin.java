@@ -1,4 +1,4 @@
-package com.jsonmack.mcplugins.hometeleport.plugin;
+package com.jsonmack.mcplugins.hometeleport;
 
 import com.sun.istack.internal.NotNull;
 import org.bukkit.Location;

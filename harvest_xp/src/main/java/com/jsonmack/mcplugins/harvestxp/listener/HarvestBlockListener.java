@@ -60,7 +60,6 @@ public class HarvestBlockListener implements Listener {
                 return;
             }
         }
-
         HarvestService service = harvestService.computeIfAbsent(player.getUniqueId(), uuid -> new HarvestService());
 
         service.harvest(block, player, config.getAmountRequired(), config.getExperience());
