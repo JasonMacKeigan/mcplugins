@@ -2,11 +2,14 @@ package com.jsonmack.mcplugins.harvestxp;
 
 import com.jsonmack.mcplugins.harvestxp.config.HarvestConfig;
 import com.jsonmack.mcplugins.harvestxp.config.HarvestMaterialConfigKey;
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -29,6 +32,8 @@ public class HarvestXPPluginTest {
         fileConfiguration.load(Paths.get("src", "test", "resources", "config.yml").toFile());
 
         config = HarvestConfig.read(fileConfiguration);
+
+        config.getMaterialConfigs().forEach(config -> System.out.println(ReflectionToStringBuilder.toString(config, ToStringStyle.DEFAULT_STYLE)));
     }
 
     @Test

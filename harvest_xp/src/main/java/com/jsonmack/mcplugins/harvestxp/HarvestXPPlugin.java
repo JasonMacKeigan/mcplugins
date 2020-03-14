@@ -1,5 +1,6 @@
 package com.jsonmack.mcplugins.harvestxp;
 
+import com.jsonmack.mcplugins.harvestxp.command.HarvestCommandExecutor;
 import com.jsonmack.mcplugins.harvestxp.command.HarvestConfigCommandExecutor;
 import com.jsonmack.mcplugins.harvestxp.config.HarvestConfig;
 import com.jsonmack.mcplugins.harvestxp.listener.HarvestBlockListener;
@@ -19,15 +20,6 @@ public class HarvestXPPlugin extends JavaPlugin {
     }
 
     @Override
-    public void reloadConfig() {
-        super.reloadConfig();
-
-        if (harvestConfig != null) {
-            HarvestConfig.write(harvestConfig, getConfig());
-        }
-    }
-
-    @Override
     public void onEnable() {
         super.onEnable();
 
@@ -35,10 +27,15 @@ public class HarvestXPPlugin extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new HarvestBlockListener(this, harvestConfig), this);
 
-        PluginCommand command = getCommand("harvest");
+        PluginCommand harvestCommand = getCommand("harvest");
 
-        if (command != null) {
-            command.setExecutor(new HarvestConfigCommandExecutor());
+        if (harvestCommand != null) {
+            harvestCommand.setExecutor(new HarvestCommandExecutor(this, harvestConfig));
+        }
+        PluginCommand configCommand = getCommand("harvest_config");
+
+        if (configCommand != null) {
+            configCommand.setExecutor(new HarvestConfigCommandExecutor(this, harvestConfig));
         }
     }
 

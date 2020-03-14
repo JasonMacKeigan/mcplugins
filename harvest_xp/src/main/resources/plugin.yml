@@ -1,5 +1,15 @@
 name: HarvestXPPlugin
 main: com.jsonmack.mcplugins.harvestxp.HarvestXPPlugin
-version: 1.0.0
+version: 1.2.0
 api-version: "1.15"
 author: BitLong
+commands:
+  harvest:
+    description: "Change config values for the harvest_xp plugin"
+    usage: "/harvest <attribute> <value>"
+
+  harvest_config:
+    description: "Read all properties from the harvest config"
+    usage: "/harvest_config"
+
+
