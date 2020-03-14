@@ -7,16 +7,23 @@ import org.bukkit.Material;
  */
 public class HarvestMaterialConfig {
 
+    private final HarvestMaterialConfigKey key;
+
     private final Material material;
 
     private final int amountRequired;
 
     private final int experience;
 
-    public HarvestMaterialConfig(Material material, int amountRequired, int experience) {
+    public HarvestMaterialConfig(HarvestMaterialConfigKey key, Material material, int amountRequired, int experience) {
+        this.key = key;
         this.material = material;
         this.amountRequired = amountRequired;
         this.experience = experience;
+    }
+
+    public HarvestMaterialConfigKey getKey() {
+        return key;
     }
 
     public Material getMaterial() {

@@ -21,7 +21,7 @@ public class HarvestMaterialConfigDecoder {
 
         int experience = configuration.getInt(key.getHarvestRequiredKey());
 
-        return new HarvestMaterialConfig(material, amountRequired, experience);
+        return new HarvestMaterialConfig(key, material, amountRequired, experience);
     }
 
     public Set<HarvestMaterialConfig> decodeAll(FileConfiguration configuration) {

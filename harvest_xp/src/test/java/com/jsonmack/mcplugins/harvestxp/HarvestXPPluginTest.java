@@ -1,5 +1,6 @@
 package com.jsonmack.mcplugins.harvestxp;
 
+import com.jsonmack.mcplugins.harvestxp.config.HarvestConfig;
 import com.jsonmack.mcplugins.harvestxp.config.HarvestMaterialConfig;
 import com.jsonmack.mcplugins.harvestxp.config.HarvestMaterialConfigDecoder;
 import com.jsonmack.mcplugins.harvestxp.config.HarvestMaterialConfigKey;
@@ -22,29 +23,30 @@ import java.util.Set;
 @RunWith(JUnit4.class)
 public class HarvestXPPluginTest {
 
-    private Set<HarvestMaterialConfig> configs;
+    private HarvestConfig config;
+
+    private FileConfiguration fileConfiguration = new YamlConfiguration();
 
     @Before
     public void load() throws IOException, InvalidConfigurationException {
-        HarvestMaterialConfigDecoder decoder = new HarvestMaterialConfigDecoder();
-
-        FileConfiguration fileConfiguration = new YamlConfiguration();
-
         fileConfiguration.load(Paths.get("src", "test", "resources", "config.yml").toFile());
 
-        configs = decoder.decodeAll(fileConfiguration);
+        config = HarvestConfig.read(fileConfiguration);
+    }
 
-        Assert.assertNotNull(configs);
+    @Test
+    public void assertHoeToolRequiredExists() {
+        Assert.assertTrue(fileConfiguration.isSet("harvest_xp.hoe_tool_required"));
     }
 
     @Test
     public void assertConfigSize() {
-        Assert.assertEquals(configs.size(), HarvestMaterialConfigKey.getAllKeys().size());
+        Assert.assertEquals(config.getMaterialConfigs().size(), HarvestMaterialConfigKey.getAllKeys().size());
     }
 
     @Test
     public void assertConfigMaterialsNonNull() {
-        Assert.assertTrue(configs.stream().noneMatch(config -> config.getMaterial() == null));
+        Assert.assertTrue(config.getMaterialConfigs().stream().noneMatch(config -> config.getMaterial() == null));
     }
 
 }

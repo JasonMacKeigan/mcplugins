@@ -22,3 +22,4 @@ harvest_xp.melon.material: MELON
 harvest_xp.melon.experience: 1
 harvest_xp.melon.harvest_required: 10
 
+harvest_xp.hoe_tool_required: false
