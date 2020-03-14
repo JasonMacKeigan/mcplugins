@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -32,7 +33,7 @@ public class HarvestBlockListener implements Listener {
 
     private final Map<UUID, HarvestService> harvestService = new HashMap<>();
 
-    private static final Set<Material> HOE_TOOLS = ImmutableSet.of(WOOD_HOE, STONE_HOE, IRON_HOE, GOLD_HOE, DIAMOND_HOE);
+    private static final Set<Material> HOE_TOOLS = ImmutableSet.of(WOODEN_HOE, STONE_HOE, IRON_HOE, GOLDEN_HOE, DIAMOND_HOE);
 
     public HarvestBlockListener(JavaPlugin plugin, HarvestConfig config) {
         this.plugin = plugin;
@@ -54,10 +55,14 @@ public class HarvestBlockListener implements Listener {
             return;
         }
         if (this.config.isHoeToolRequired()) {
-            ItemStack mainHandItem = player.getEquipment().getItemInMainHand();
+            EntityEquipment equipment = player.getEquipment();
 
-            if (mainHandItem == null || !HOE_TOOLS.contains(mainHandItem.getType())) {
-                return;
+            if (equipment != null) {
+                ItemStack mainHandItem = equipment.getItemInMainHand();
+
+                if (!HOE_TOOLS.contains(mainHandItem.getType())) {
+                    return;
+                }
             }
         }
         HarvestService service = harvestService.computeIfAbsent(player.getUniqueId(), uuid -> new HarvestService());

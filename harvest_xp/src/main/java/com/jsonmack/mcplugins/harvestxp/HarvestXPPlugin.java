@@ -1,7 +1,9 @@
 package com.jsonmack.mcplugins.harvestxp;
 
+import com.jsonmack.mcplugins.harvestxp.command.HarvestConfigCommandExecutor;
 import com.jsonmack.mcplugins.harvestxp.config.HarvestConfig;
 import com.jsonmack.mcplugins.harvestxp.listener.HarvestBlockListener;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -32,6 +34,12 @@ public class HarvestXPPlugin extends JavaPlugin {
         harvestConfig = HarvestConfig.read(getConfig());
 
         getServer().getPluginManager().registerEvents(new HarvestBlockListener(this, harvestConfig), this);
+
+        PluginCommand command = getCommand("harvest");
+
+        if (command != null) {
+            command.setExecutor(new HarvestConfigCommandExecutor());
+        }
     }
 
     @Override

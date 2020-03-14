@@ -59,4 +59,8 @@ public enum HarvestMaterialConfigKey {
     public String getHarvestRequiredKey() {
         return harvestRequiredKey;
     }
+
+    public String getKeyPrefix() {
+        return keyPrefix;
+    }
 }
