@@ -1,4 +1,4 @@
-![Java CI with Maven](https://github.com/JasonMacKeigan/mcplugins/workflows/Java%20CI%20with%20Maven/badge.svg)
+![Java CI with Maven](https://github.com/JasonMacKeigan/mcplugins/workflows/Java%20CI%20with%20Maven/badge.svg?event=push)
 
 # Minecraft Plugins
 A collection of minecraft plugins using the Bukkit API. 
