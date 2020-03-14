@@ -1,6 +1,5 @@
 package com.jsonmack.mcplugins.hometeleport;
 
-import com.sun.istack.internal.NotNull;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
