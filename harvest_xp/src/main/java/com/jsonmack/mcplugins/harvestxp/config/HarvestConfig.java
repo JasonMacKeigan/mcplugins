@@ -3,6 +3,7 @@ package com.jsonmack.mcplugins.harvestxp.config;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
@@ -26,10 +27,27 @@ public class HarvestConfig {
                 .collect(Collectors.toMap(HarvestMaterialConfig::getMaterial, Function.identity()));
     }
 
+    public HarvestConfig replaceHarvestMaterialConfig(HarvestMaterialConfigKey key, HarvestMaterialConfig config) {
+        HarvestMaterialConfig existing = materialConfigs.stream()
+                .filter(c -> c.getKey() == key)
+                .findAny().orElseThrow(IllegalArgumentException::new);
+
+        Set<HarvestMaterialConfig> newConfigs = new HashSet<>(materialConfigs);
+
+        newConfigs.remove(existing);
+        newConfigs.add(config);
+
+        return new HarvestConfig(newConfigs, hoeToolRequired);
+    }
+
+    public HarvestConfig setHoeToolRequired(boolean hoeToolRequired) {
+        return new HarvestConfig(materialConfigs, hoeToolRequired);
+    }
+
     public static HarvestConfig read(FileConfiguration config) {
         Set<HarvestMaterialConfig> materialConfigs = new HarvestMaterialConfigDecoder().decodeAll(config);
 
-        boolean hoeToolRequired = config.getBoolean("harvest_xp.hoe_tool_required");
+        boolean hoeToolRequired = config.getBoolean("hoe_tool_required");
 
         return new HarvestConfig(materialConfigs, hoeToolRequired);
     }
@@ -38,11 +56,10 @@ public class HarvestConfig {
         for (HarvestMaterialConfig materialConfig : config.getMaterialConfigs()) {
             HarvestMaterialConfigKey key = materialConfig.getKey();
 
-            configuration.set(key.getMaterialKey(), materialConfig.getMaterial().name());
             configuration.set(key.getExperienceKey(), materialConfig.getExperience());
             configuration.set(key.getHarvestRequiredKey(), materialConfig.getAmountRequired());
         }
-        configuration.set("harvest_xp.hoe_tool_required", config.isHoeToolRequired());
+        configuration.set("hoe_tool_required", config.isHoeToolRequired());
     }
 
     public Set<HarvestMaterialConfig> getMaterialConfigs() {

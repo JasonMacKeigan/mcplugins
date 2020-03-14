@@ -31,7 +31,6 @@ public class HarvestService {
             ExperienceOrb orb = world.spawn(block.getLocation(), ExperienceOrb.class);
 
             orb.setExperience(experience);
-            orb.setGlowing(true);
         }
     }
 

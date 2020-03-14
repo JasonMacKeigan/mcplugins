@@ -22,6 +22,14 @@ public class HarvestMaterialConfig {
         this.experience = experience;
     }
 
+    public HarvestMaterialConfig withAmount(int amountRequired) {
+        return new HarvestMaterialConfig(key, material, amountRequired, experience);
+    }
+
+    public HarvestMaterialConfig withExperience(int experience) {
+        return new HarvestMaterialConfig(key, material, amountRequired, experience);
+    }
+
     public HarvestMaterialConfigKey getKey() {
         return key;
     }

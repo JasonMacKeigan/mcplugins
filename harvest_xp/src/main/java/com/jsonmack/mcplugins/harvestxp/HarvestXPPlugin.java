@@ -5,6 +5,7 @@ import com.jsonmack.mcplugins.harvestxp.command.HarvestConfigCommandExecutor;
 import com.jsonmack.mcplugins.harvestxp.config.HarvestConfig;
 import com.jsonmack.mcplugins.harvestxp.listener.HarvestBlockListener;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -20,10 +21,23 @@ public class HarvestXPPlugin extends JavaPlugin {
     }
 
     @Override
+    public void reloadConfig() {
+        super.reloadConfig();
+
+        onConfigUpdate();
+    }
+
+    @Override
     public void onEnable() {
         super.onEnable();
 
         harvestConfig = HarvestConfig.read(getConfig());
+
+        onConfigUpdate();
+    }
+
+    private void onConfigUpdate() {
+        HandlerList.unregisterAll(this);
 
         getServer().getPluginManager().registerEvents(new HarvestBlockListener(this, harvestConfig), this);
 
@@ -37,6 +51,20 @@ public class HarvestXPPlugin extends JavaPlugin {
         if (configCommand != null) {
             configCommand.setExecutor(new HarvestConfigCommandExecutor(this, harvestConfig));
         }
+    }
+
+    public HarvestXPPlugin setConfig(HarvestConfig harvestConfig) {
+        this.harvestConfig = harvestConfig;
+
+        return this;
+    }
+
+    public HarvestXPPlugin writeConfig() {
+        HarvestConfig.write(harvestConfig, getConfig());
+
+        saveConfig();
+
+        return this;
     }
 
     @Override

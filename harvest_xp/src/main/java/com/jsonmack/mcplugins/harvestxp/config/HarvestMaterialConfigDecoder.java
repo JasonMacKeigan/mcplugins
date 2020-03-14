@@ -12,13 +12,11 @@ import java.util.stream.Collectors;
 public class HarvestMaterialConfigDecoder {
 
     public HarvestMaterialConfig decode(FileConfiguration configuration, HarvestMaterialConfigKey key) {
-        Material material = Material.getMaterial(configuration.getString(key.getMaterialKey()));
-
         int amountRequired = configuration.getInt(key.getHarvestRequiredKey());
 
         int experience = configuration.getInt(key.getExperienceKey());
 
-        return new HarvestMaterialConfig(key, material, amountRequired, experience);
+        return new HarvestMaterialConfig(key, key.getMaterial(), amountRequired, experience);
     }
 
     public Set<HarvestMaterialConfig> decodeAll(FileConfiguration configuration) {

@@ -1,34 +1,27 @@
-harvest_xp:
-  wheat: {
-    material: WHEAT,
-    experience: 1,
-    harvest_required: 10
-  }
-  beetroot: {
-    material: BEETROOT,
-    experience: 1,
-    harvest_required: 10
-  }
-  potato: {
-    material: POTATO,
-    experience: 1,
-    harvest_required: 10
-  }
-  carrot: {
-    material: CARROT,
-    experience: 1,
-    harvest_required: 10
-  }
-  pumpkin: {
-    material: PUMPKIN,
-    experience: 1,
-    harvest_required: 10
-  }
-  melon: {
-    material: MELON,
-    experience: 1,
-    harvest_required: 10
-  }
-  hoe_tool_required: false
+wheat: {
+  experience: 1,
+  harvest_required: 10
+}
+beetroot: {
+  experience: 1,
+  harvest_required: 10
+}
+potato: {
+  experience: 1,
+  harvest_required: 10
+}
+carrot: {
+  experience: 1,
+  harvest_required: 10
+}
+pumpkin: {
+  experience: 1,
+  harvest_required: 10
+}
+melon: {
+  experience: 1,
+  harvest_required: 10
+}
+hoe_tool_required: false
 
 

@@ -38,7 +38,7 @@ public class HarvestXPPluginTest {
 
     @Test
     public void assertHoeToolRequiredExists() {
-        Assert.assertTrue(fileConfiguration.isSet("harvest_xp.hoe_tool_required"));
+        Assert.assertTrue(fileConfiguration.isSet("hoe_tool_required"));
     }
 
     @Test

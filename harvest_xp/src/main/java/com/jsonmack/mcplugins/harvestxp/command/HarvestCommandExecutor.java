@@ -1,6 +1,8 @@
 package com.jsonmack.mcplugins.harvestxp.command;
 
+import com.jsonmack.mcplugins.harvestxp.HarvestXPPlugin;
 import com.jsonmack.mcplugins.harvestxp.config.HarvestConfig;
+import com.jsonmack.mcplugins.harvestxp.config.HarvestMaterialConfig;
 import com.jsonmack.mcplugins.harvestxp.config.HarvestMaterialConfigKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -16,11 +18,11 @@ import java.util.List;
  */
 public class HarvestCommandExecutor implements TabExecutor {
 
-    private final JavaPlugin plugin;
+    private final HarvestXPPlugin plugin;
 
     private final HarvestConfig config;
 
-    public HarvestCommandExecutor(JavaPlugin plugin, HarvestConfig config) {
+    public HarvestCommandExecutor(HarvestXPPlugin plugin, HarvestConfig config) {
         this.plugin = plugin;
         this.config = config;
     }
@@ -51,6 +53,11 @@ public class HarvestCommandExecutor implements TabExecutor {
                 commandSender.sendMessage("This property cannot be modified");
                 return false;
             }
+            HarvestMaterialConfig harvestMaterialConfig = config.getMaterialConfigs().stream().filter(c -> c.getKey() == materialConfigKey).findAny().orElse(null);
+
+            if (harvestMaterialConfig == null) {
+                return false;
+            }
             if (keyFound.equals(materialConfigKey.getExperienceKey())) {
                 try {
                     int experience = Integer.parseInt(value);
@@ -59,8 +66,8 @@ public class HarvestCommandExecutor implements TabExecutor {
                         commandSender.sendMessage("Experience must be greater than zero.");
                         return false;
                     }
-                    plugin.getConfig().set(keyFound, experience);
-                    plugin.saveConfig();
+                    plugin.setConfig(config.replaceHarvestMaterialConfig(materialConfigKey, harvestMaterialConfig.withExperience(experience)))
+                            .writeConfig().reloadConfig();
                     commandSender.sendMessage(String.format("The experience gained from harvesting %s is now %s.",
                             materialConfigKey.name().toLowerCase(), experience));
                 } catch (NumberFormatException nfe) {
@@ -74,8 +81,8 @@ public class HarvestCommandExecutor implements TabExecutor {
                         commandSender.sendMessage("The harvest required must be 1 or greater.");
                         return false;
                     }
-                    plugin.getConfig().set(keyFound, harvestRequired);
-                    plugin.saveConfig();
+                    plugin.setConfig(config.replaceHarvestMaterialConfig(materialConfigKey, harvestMaterialConfig.withAmount(harvestRequired)))
+                            .writeConfig().reloadConfig();
                     commandSender.sendMessage(String.format("The harvest required to gain experience for %s is now %s.",
                             materialConfigKey.name().toLowerCase(), harvestRequired));
                 } catch (NumberFormatException nfe) {

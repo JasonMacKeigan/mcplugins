@@ -28,7 +28,9 @@ public class HarvestConfigCommandExecutor implements CommandExecutor {
 
         for (HarvestMaterialConfig materialConfig : config.getMaterialConfigs()) {
             commandSender.sendMessage(String.format("%s provides %sxp after %s harvests.",
-                    materialConfig.getMaterial(), materialConfig.getExperience(), materialConfig.getAmountRequired()));
+                    materialConfig.getMaterial().name().toLowerCase(),
+                    materialConfig.getExperience(),
+                    materialConfig.getAmountRequired()));
         }
         return true;
     }

@@ -1,27 +1,28 @@
 package com.jsonmack.mcplugins.harvestxp.config;
 
 import com.google.common.collect.ImmutableSet;
+import org.bukkit.Material;
 
 import java.util.EnumSet;
 import java.util.Set;
+
+import static org.bukkit.Material.*;
 
 /**
  * Created by Jason MK on 2020-03-13 at 1:23 p.m.
  */
 public enum HarvestMaterialConfigKey {
-    WHEAT("harvest_xp.wheat"),
+    WHEAT("wheat", Material.WHEAT),
 
-    CARROT("harvest_xp.carrot"),
+    CARROT("carrot", Material.CARROT),
 
-    POTATO("harvest_xp.potato"),
+    POTATO("potato", Material.POTATO),
 
-    BEETROOT("harvest_xp.beetroot"),
+    BEETROOT("beetroot", Material.BEETROOT),
 
-    PUMPKIN("harvest_xp.pumpkin"),
+    PUMPKIN("pumpkin", Material.PUMPKIN),
 
-    WATERMELON("harvest_xp.melon");
-
-    private static final String MATERIAL_KEY = "material";
+    WATERMELON("melon", MELON);
 
     private static final String EXPERIENCE_KEY = "experience";
 
@@ -29,17 +30,17 @@ public enum HarvestMaterialConfigKey {
 
     private final String keyPrefix;
 
-    private final String materialKey;
-
     private final String experienceKey;
 
     private final String harvestRequiredKey;
 
+    private final Material material;
+
     private static final Set<HarvestMaterialConfigKey> KEYS = ImmutableSet.copyOf(EnumSet.allOf(HarvestMaterialConfigKey.class));
 
-    HarvestMaterialConfigKey(String keyPrefix) {
+    HarvestMaterialConfigKey(String keyPrefix, Material material) {
         this.keyPrefix = keyPrefix;
-        this.materialKey = keyPrefix.concat(".").concat(MATERIAL_KEY);
+        this.material = material;
         this.experienceKey = keyPrefix.concat(".").concat(EXPERIENCE_KEY);
         this.harvestRequiredKey = keyPrefix.concat(".").concat(HARVEST_REQUIRD_KEY);
     }
@@ -48,8 +49,8 @@ public enum HarvestMaterialConfigKey {
         return KEYS;
     }
 
-    public String getMaterialKey() {
-        return materialKey;
+    public Material getMaterial() {
+        return material;
     }
 
     public String getExperienceKey() {
