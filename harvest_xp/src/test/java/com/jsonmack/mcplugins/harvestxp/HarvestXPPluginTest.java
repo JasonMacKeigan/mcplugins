@@ -1,21 +1,21 @@
 package com.jsonmack.mcplugins.harvestxp;
 
 import com.jsonmack.mcplugins.harvestxp.config.HarvestConfig;
+import com.jsonmack.mcplugins.harvestxp.config.HarvestConfigCodec;
 import com.jsonmack.mcplugins.harvestxp.config.HarvestMaterialConfigKey;
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import com.jsonmack.mcplugins.harvestxp.config.HarvestToolConfigKey;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 /**
  * Created by Jason MK on 2020-03-13 at 3:36 p.m.
@@ -31,14 +31,17 @@ public class HarvestXPPluginTest {
     public void load() throws IOException, InvalidConfigurationException {
         fileConfiguration.load(Paths.get("src", "test", "resources", "config.yml").toFile());
 
-        config = HarvestConfig.read(fileConfiguration);
+        config = new HarvestConfigCodec().decode(fileConfiguration);
+    }
 
-        config.getMaterialConfigs().forEach(config -> System.out.println(ReflectionToStringBuilder.toString(config, ToStringStyle.DEFAULT_STYLE)));
+    @Test
+    public void assertToolReductionKeysExist() {
+        Assert.assertTrue(HarvestToolConfigKey.getKeys().stream().allMatch(key -> fileConfiguration.isSet(key.getReductionKey())));
     }
 
     @Test
     public void assertHoeToolRequiredExists() {
-        Assert.assertTrue(fileConfiguration.isSet("hoe_tool_required"));
+        Assert.assertTrue(fileConfiguration.isSet(HarvestConfigCodec.HOE_TOOL_REQUIRED_KEY));
     }
 
     @Test
@@ -51,4 +54,18 @@ public class HarvestXPPluginTest {
         Assert.assertTrue(config.getMaterialConfigs().stream().noneMatch(config -> config.getMaterial() == null));
     }
 
+    @Test
+    public void assertToolConfigSize() {
+        Assert.assertEquals(config.getToolConfigs().size(), HarvestToolConfigKey.getKeys().size());
+    }
+
+    @Test
+    public void assertToolConfigsNonNull() {
+        Assert.assertTrue(config.getToolConfigs().stream().allMatch(Objects::nonNull));
+    }
+
+    @Test
+    public void assertHoeToolTypeReducingExists() {
+        Assert.assertTrue(fileConfiguration.isSet(HarvestConfigCodec.HOE_TYPE_REDUCING_HARVEST_KEY));
+    }
 }

@@ -1,6 +1,6 @@
-name: "HarvestXPPlugin"
+name: "harvest_xp"
 main: "com.jsonmack.mcplugins.harvestxp.HarvestXPPlugin"
-version: "1.3.0"
+version: "1.4.0"
 api-version: "1.15"
 author: "BitLong"
 commands:
@@ -11,5 +11,3 @@ commands:
   harvest_config:
     description: "Read all properties from the harvest config"
     usage: "/harvest_config"
-
-

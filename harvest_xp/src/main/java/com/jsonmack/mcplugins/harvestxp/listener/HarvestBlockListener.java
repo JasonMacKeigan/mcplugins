@@ -3,6 +3,7 @@ package com.jsonmack.mcplugins.harvestxp.listener;
 import com.google.common.collect.ImmutableSet;
 import com.jsonmack.mcplugins.harvestxp.config.HarvestConfig;
 import com.jsonmack.mcplugins.harvestxp.config.HarvestMaterialConfig;
+import com.jsonmack.mcplugins.harvestxp.config.HarvestToolConfig;
 import com.jsonmack.mcplugins.harvestxp.harvest.HarvestService;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -54,20 +55,29 @@ public class HarvestBlockListener implements Listener {
         if (config == null) {
             return;
         }
-        if (this.config.isHoeToolRequired()) {
-            EntityEquipment equipment = player.getEquipment();
+        EntityEquipment equipment = player.getEquipment();
 
-            if (equipment != null) {
-                ItemStack mainHandItem = equipment.getItemInMainHand();
+        int reduction = 0;
 
-                if (!HOE_TOOLS.contains(mainHandItem.getType())) {
-                    return;
-                }
+        if (equipment != null) {
+            ItemStack mainHandItem = equipment.getItemInMainHand();
+
+            Material mainHandMaterial = equipment.getItemInMainHand().getType();
+
+            if (this.config.isHoeToolRequired() && !HOE_TOOLS.contains(mainHandMaterial)) {
+                return;
+            }
+            HarvestToolConfig toolConfig = this.config.getToolConfigsByMaterial().get(mainHandItem.getType());
+
+            if (toolConfig != null) {
+                reduction = toolConfig.getReduction();
             }
         }
         HarvestService service = harvestService.computeIfAbsent(player.getUniqueId(), uuid -> new HarvestService());
 
-        service.harvest(block, player, config.getAmountRequired(), config.getExperience());
+        int amountRequired = Math.max(1, config.getAmountRequired() - reduction);
+
+        service.harvest(block, player, amountRequired, config.getExperience());
     }
 
 }

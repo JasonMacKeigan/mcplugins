@@ -6,7 +6,7 @@ import org.bukkit.Material;
 import java.util.EnumSet;
 import java.util.Set;
 
-import static org.bukkit.Material.*;
+import static org.bukkit.Material.MELON;
 
 /**
  * Created by Jason MK on 2020-03-13 at 1:23 p.m.
@@ -24,9 +24,9 @@ public enum HarvestMaterialConfigKey {
 
     WATERMELON("melon", MELON);
 
-    private static final String EXPERIENCE_KEY = "experience";
+    public static final String EXPERIENCE_KEY = "experience";
 
-    private static final String HARVEST_REQUIRD_KEY = "harvest_required";
+    public static final String HARVEST_REQUIRED_KEY = "harvest_required";
 
     private final String keyPrefix;
 
@@ -42,7 +42,7 @@ public enum HarvestMaterialConfigKey {
         this.keyPrefix = keyPrefix;
         this.material = material;
         this.experienceKey = keyPrefix.concat(".").concat(EXPERIENCE_KEY);
-        this.harvestRequiredKey = keyPrefix.concat(".").concat(HARVEST_REQUIRD_KEY);
+        this.harvestRequiredKey = keyPrefix.concat(".").concat(HARVEST_REQUIRED_KEY);
     }
 
     public static Set<HarvestMaterialConfigKey> getAllKeys() {
