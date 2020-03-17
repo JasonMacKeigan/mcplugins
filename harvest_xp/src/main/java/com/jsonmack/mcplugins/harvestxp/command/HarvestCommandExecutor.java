@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
  */
 public class HarvestCommandExecutor implements TabExecutor {
 
+    private static final String COMMAND_PERMISSIONS = "harvestxp.config";
+
     private final HarvestXPPlugin plugin;
 
     private final HarvestConfig config;
@@ -28,12 +30,18 @@ public class HarvestCommandExecutor implements TabExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+        if (!commandSender.hasPermission(COMMAND_PERMISSIONS)) {
+            commandSender.sendMessage("You do not have the permissions required to access this.");
+            return false;
+        }
         if (strings.length < 2) {
             return false;
         }
         String key = strings[0];
 
         String value = strings[1];
+
+        if (!commandSender.hasPermission(""))
 
         if (toolRequiredCommand(key, value, commandSender)) {
             return true;
@@ -54,6 +62,9 @@ public class HarvestCommandExecutor implements TabExecutor {
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
         List<String> results = new ArrayList<>();
 
+        if (!commandSender.hasPermission(COMMAND_PERMISSIONS)) {
+            return results;
+        }
         Set<String> arguments = Arrays.stream(strings).map(String::toLowerCase).collect(Collectors.toSet());
 
         HarvestMaterialConfigKey foundMaterialKey = HarvestMaterialConfigKey.getAllKeys()
