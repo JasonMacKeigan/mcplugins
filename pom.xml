@@ -25,6 +25,7 @@
     <modules>
         <module>home_teleport</module>
         <module>harvest_xp</module>
+        <module>one_versus_one</module>
     </modules>
 
     <repositories>
