@@ -18,5 +18,5 @@ commands:
 permissions:
   harvestxp.config:
     description: "Allows the user to modify harvest_xp configuration values."
-    default: "op"
+    default: false
 
