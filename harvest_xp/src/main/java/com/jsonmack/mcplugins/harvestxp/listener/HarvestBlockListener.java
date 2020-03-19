@@ -52,7 +52,7 @@ public class HarvestBlockListener implements Listener {
 
         BlockData blockData = block.getBlockData();
 
-        if (blockData.getClass() != Ageable.class) {
+        if (!(blockData instanceof Ageable)) {
             return;
         }
         Ageable ageable = (Ageable) blockData;
