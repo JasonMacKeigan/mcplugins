@@ -14,15 +14,17 @@ import static org.bukkit.Material.MELON;
 public enum HarvestMaterialConfigKey {
     WHEAT("wheat", Material.WHEAT),
 
-    CARROT("carrot", Material.CARROT),
+    CARROT("carrot", Material.CARROTS),
 
-    POTATO("potato", Material.POTATO),
+    POTATO("potato", Material.POTATOES),
 
-    BEETROOT("beetroot", Material.BEETROOT),
+    BEETROOT("beetroot", Material.BEETROOTS),
 
-    PUMPKIN("pumpkin", Material.PUMPKIN),
+    PUMPKIN("pumpkin", Material.PUMPKIN_STEM),
 
-    WATERMELON("melon", MELON);
+    WATERMELON("melon", Material.MELON_STEM),
+
+    SUGAR_CANE("sugar_cane", Material.SUGAR_CANE);
 
     public static final String EXPERIENCE_KEY = "experience";
 

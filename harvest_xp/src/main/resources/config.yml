@@ -1,21 +1,24 @@
 wheat:
   experience: 1
-  harvest_required: 10
+  harvest_required: 16
 beetroot:
   experience: 1
-  harvest_required: 10
+  harvest_required: 16
 potato:
   experience: 1
-  harvest_required: 10
+  harvest_required: 16
 carrot:
   experience: 1
-  harvest_required: 10
+  harvest_required: 16
 pumpkin:
   experience: 1
-  harvest_required: 10
+  harvest_required: 8
 melon:
   experience: 1
-  harvest_required: 10
+  harvest_required: 8
+sugar_cane:
+  experience: 1
+  harvest_required: 16
 wood_hoe:
   reduction: 0
 stone_hoe:
@@ -27,4 +30,4 @@ iron_hoe:
 diamond_hoe:
   reduction: 3
 hoe_type_reducing_harvest: true
-hoe_tool_required: false
+hoe_tool_required: true

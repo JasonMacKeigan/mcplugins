@@ -41,8 +41,6 @@ public class HarvestCommandExecutor implements TabExecutor {
 
         String value = strings[1];
 
-        if (!commandSender.hasPermission(""))
-
         if (toolRequiredCommand(key, value, commandSender)) {
             return true;
         }
@@ -52,10 +50,7 @@ public class HarvestCommandExecutor implements TabExecutor {
         if (materialCommand(key, value, commandSender)) {
             return true;
         }
-        if (toolTypeCommand(key, value, commandSender)) {
-            return true;
-        }
-        return false;
+        return toolTypeCommand(key, value, commandSender);
     }
 
     @Override

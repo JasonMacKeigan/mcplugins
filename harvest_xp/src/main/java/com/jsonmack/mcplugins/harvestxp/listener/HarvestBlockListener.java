@@ -7,6 +7,8 @@ import com.jsonmack.mcplugins.harvestxp.config.HarvestToolConfig;
 import com.jsonmack.mcplugins.harvestxp.harvest.HarvestService;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.Ageable;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -47,6 +49,17 @@ public class HarvestBlockListener implements Listener {
             return;
         }
         Block block = event.getBlock();
+
+        BlockData blockData = block.getBlockData();
+
+        if (blockData.getClass() != Ageable.class) {
+            return;
+        }
+        Ageable ageable = (Ageable) blockData;
+
+        if (ageable.getAge() < ageable.getMaximumAge()) {
+            return;
+        }
 
         Player player = event.getPlayer();
 
