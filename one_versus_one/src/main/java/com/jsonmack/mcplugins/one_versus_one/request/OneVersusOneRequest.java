@@ -2,6 +2,7 @@ package com.jsonmack.mcplugins.one_versus_one.request;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 /**

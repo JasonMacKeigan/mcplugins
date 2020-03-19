@@ -1,0 +1,9 @@
+main: "com.jsonmack.mcplugins.one_versus_one.OneVersusOnePluginLauncher"
+name: "OneVersusOne"
+version: "1.0.0"
+api-version: "1.15"
+website: "https://github.com/JasonMacKeigan/mcplugins/tree/master/one_versus_one"
+author: "BitLong"
+description: "A plugin that allows safe one versus one fights between two players."
+
+

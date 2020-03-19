@@ -1,6 +1,6 @@
 name: "harvest_xp"
 main: "com.jsonmack.mcplugins.harvestxp.HarvestXPPlugin"
-version: "1.6.0"
+version: "1.7.0"
 api-version: "1.15"
 author: "BitLong"
 website: "https://github.com/JasonMacKeigan/mcplugins/tree/master/harvest_xp/"
@@ -18,5 +18,5 @@ commands:
 permissions:
   harvestxp.config:
     description: "Allows the user to modify harvest_xp configuration values."
-    default: false
+    default: "op"
 
