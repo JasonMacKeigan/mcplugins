@@ -16,9 +16,6 @@ pumpkin:
 melon:
   experience: 1
   harvest_required: 8
-sugar_cane:
-  experience: 1
-  harvest_required: 16
 wood_hoe:
   reduction: 0
 stone_hoe:

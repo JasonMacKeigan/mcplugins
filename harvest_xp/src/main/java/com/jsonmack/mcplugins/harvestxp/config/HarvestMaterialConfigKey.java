@@ -22,9 +22,8 @@ public enum HarvestMaterialConfigKey {
 
     PUMPKIN("pumpkin", Material.PUMPKIN_STEM),
 
-    WATERMELON("melon", Material.MELON_STEM),
-
-    SUGAR_CANE("sugar_cane", Material.SUGAR_CANE);
+    WATERMELON("melon", Material.MELON_STEM)
+    ;
 
     public static final String EXPERIENCE_KEY = "experience";
 
