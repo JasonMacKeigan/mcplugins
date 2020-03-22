@@ -54,8 +54,6 @@ public class SpawnerBreakListener implements Listener {
         }
         ItemStack spawner = new ItemStack(Material.SPAWNER, 1);
 
-        player.getWorld().dropItemNaturally(block.getLocation(), spawner);
-
         BlockState blockState = block.getState();
 
         if (!(blockState instanceof CreatureSpawner)) {
@@ -82,6 +80,8 @@ public class SpawnerBreakListener implements Listener {
                 PersistentDataType.STRING, creatureSpawner.getSpawnedType().name());
 
         spawner.setItemMeta(spawnerMeta);
+
+        player.getWorld().dropItemNaturally(block.getLocation(), spawner);
     }
 
 }

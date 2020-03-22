@@ -1,8 +1,10 @@
 package com.jsonmack.mcplugins.silktouch_spawner;
 
+import com.jsonmack.mcplugins.silktouch_spawner.command.SpawnerCommandExecutor;
 import com.jsonmack.mcplugins.silktouch_spawner.key.SpawnerNamespacedKeySet;
 import com.jsonmack.mcplugins.silktouch_spawner.listener.SpawnerBreakListener;
 import com.jsonmack.mcplugins.silktouch_spawner.listener.SpawnerPlaceListener;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -21,6 +23,13 @@ public class SilkTouchSpawnerPlugin extends JavaPlugin {
 
         manager.registerEvents(new SpawnerBreakListener(this), this);
         manager.registerEvents(new SpawnerPlaceListener(this), this);
+
+        PluginCommand command = getCommand("spawner");
+
+        if (command == null) {
+            throw new RuntimeException("Command for spawner is not defined in plugin.");
+        }
+        command.setTabCompleter(new SpawnerCommandExecutor());
     }
 
     public SpawnerNamespacedKeySet getSpawnerNamespacedKeySet() {

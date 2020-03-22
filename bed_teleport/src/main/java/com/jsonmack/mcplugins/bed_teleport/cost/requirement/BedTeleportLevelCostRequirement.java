@@ -22,6 +22,6 @@ public class BedTeleportLevelCostRequirement implements BedTeleportCostRequireme
 
     @Override
     public void remove(Player player, int amount) {
-        player.giveExpLevels(-1);
+        player.giveExpLevels(-amount);
     }
 }

@@ -46,6 +46,9 @@ public class SpawnerPlaceListener implements Listener {
 
         PersistentDataContainer container = meta.getPersistentDataContainer();
 
+        if (container.isEmpty()) {
+            return;
+        }
         String type = container.get(keySet.getNamespacedKey(SpawnerNamespacedKey.TYPE), PersistentDataType.STRING);
 
         EntityType entityType = EntityType.valueOf(type);
