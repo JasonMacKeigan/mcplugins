@@ -1,9 +1,6 @@
 package com.jsonmack.mcplugins.one_versus_one.module.com.jsonmack.mcplugins.one_versus_one.config;
 
-import com.jsonmack.mcplugins.one_versus_one.config.OneVersusOneConfig;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.configuration.serialization.ConfigurationSerialization;
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,0 +1,6 @@
+config:
+  ==: com.jsonmack.mcplugins.bed_teleport.config.BedTeleportConfig
+  cost_type: LEVEL
+  cost_amount: 1
+  cooldown_unit: SECONDS
+  cooldown_duration: '60'

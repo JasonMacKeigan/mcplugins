@@ -2,7 +2,6 @@ package com.jsonmack.mcplugins.one_versus_one.service;
 
 import com.jsonmack.mcplugins.one_versus_one.request.OneVersusOneRequest;
 
-import javax.inject.Singleton;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -10,7 +9,6 @@ import java.util.UUID;
 /**
  * Created by Jason MK on 2020-03-18 at 12:59 p.m.
  */
-@Singleton
 public class OneVersusOneRequestService {
 
     private final Set<OneVersusOneRequest> requests = new HashSet<>();

@@ -1,9 +1,0 @@
-name: HomeTeleportPlugin
-main: com.jsonmack.mcplugins.hometeleport.HomeTeleportPlugin
-version: 1.0.0
-api-version: "1.15"
-author: BitLong
-commands:
-  home:
-    description: Teleports the player to their bed location
-    usage: /<command>

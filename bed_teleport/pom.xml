@@ -5,6 +5,7 @@
     <properties>
         <plugin.directory>${project.parent.basedir}/${plugin.directory.name}</plugin.directory>
     </properties>
+
     <parent>
         <groupId>com.jsonmack</groupId>
         <artifactId>mcplugins</artifactId>
@@ -16,12 +17,10 @@
             <groupId>com.jsonmack</groupId>
             <artifactId>api</artifactId>
             <version>1.10-SNAPSHOT</version>
-            <scope>provided</scope>
-            <type>jar</type>
         </dependency>
     </dependencies>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>harvest_xp</artifactId>
+    <artifactId>bed_teleport</artifactId>
 
 </project>

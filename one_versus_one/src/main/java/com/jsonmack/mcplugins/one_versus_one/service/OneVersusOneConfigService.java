@@ -2,9 +2,6 @@ package com.jsonmack.mcplugins.one_versus_one.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-import com.google.inject.name.Named;
 import com.jsonmack.mcplugins.one_versus_one.config.OneVersusOneConfig;
 
 import java.io.IOException;
@@ -16,7 +13,6 @@ import java.nio.file.StandardOpenOption;
 /**
  * Created by Jason MK on 2020-03-18 at 9:08 p.m.
  */
-@Singleton
 public class OneVersusOneConfigService {
 
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -27,10 +23,9 @@ public class OneVersusOneConfigService {
 
     private OneVersusOneConfig config;
 
-    @Inject
     public OneVersusOneConfigService(Path localFilePath,
-                                     @Named("config") OneVersusOneConfig config,
-                                     @Named("defaultConfig") OneVersusOneConfig defaultConfig) {
+                                     OneVersusOneConfig config,
+                                     OneVersusOneConfig defaultConfig) {
         this.localFilePath = localFilePath;
         this.config = config;
         this.defaultConfig = defaultConfig;
@@ -47,10 +42,6 @@ public class OneVersusOneConfigService {
         }
     }
 
-    public void setConfig(OneVersusOneConfig config) {
-        this.config = config;
-    }
-
     public void setConfigAndWrite(OneVersusOneConfig config) throws IOException {
         this.config = config;
         write();
@@ -62,5 +53,9 @@ public class OneVersusOneConfigService {
 
     public OneVersusOneConfig getConfig() {
         return config;
+    }
+
+    public void setConfig(OneVersusOneConfig config) {
+        this.config = config;
     }
 }

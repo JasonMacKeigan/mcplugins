@@ -1,0 +1,18 @@
+name: "BedTeleportCostPlugin"
+main: "com.jsonmack.mcplugins.bed_teleport.BedTeleportCostPlugin"
+version: "1.0.0"
+api-version: "1.15"
+author: "BitLong"
+commands:
+  bed:
+    description: "Teleports the player to their bed location at a cost."
+    usage: "/bed"
+    aliases: [
+      "/home"
+    ]
+    permission: "not op"
+
+  bed_config:
+    description: "Allows the operator to change core attributes to the plugin."
+    usage: "/bed_config"
+    permission: "op"
