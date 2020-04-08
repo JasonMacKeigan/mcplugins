@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -36,12 +37,17 @@ public class TeleportModuleCreationListener implements Listener {
 
         Location locationOfTable = block.getLocation().clone();
 
-        Set<Block> surrounding = findSurrounding(locationOfTable.getWorld(), locationOfTable);
+        Set<Block> surrounding = LocationUtils.findSurroundingBelow(locationOfTable.getWorld(), locationOfTable, 1, 1, 0);
+
+        Player player = event.getPlayer();
 
         if (surrounding.size() < 9) {
             return;
         }
         if (surrounding.stream().filter(b -> b.getType() == Material.DIAMOND_BLOCK).count() < 8) {
+            return;
+        }
+        if (surrounding.stream().anyMatch(Block::isEmpty)) {
             return;
         }
         Block blockBelowTable = world.getBlockAt(locationOfTable.getBlockX(),
@@ -56,13 +62,16 @@ public class TeleportModuleCreationListener implements Listener {
             return;
         }
         if (service.getModules().stream().anyMatch(module -> module.getLocation().getMaterial() == blockBelowTable.getType())) {
+            player.sendMessage("You already have a teleport module with this unique type.");
             event.setCancelled(true);
             return;
         }
         if (service.getModules().size() == InventoryType.CHEST.getDefaultSize()) {
+            player.sendMessage("You already have the maximum number of modules possible.");
             event.setCancelled(true);
             return;
         }
+        player.sendMessage("You have successfully created a teleport module.");
         service.add(new TeleportModule(new TeleportLocation(locationOfTable.clone(), blockBelowTable.getType())));
         try {
             plugin.saveModules();
@@ -70,21 +79,6 @@ public class TeleportModuleCreationListener implements Listener {
             event.getPlayer().sendMessage("Unable to create module, something went wrong.");
             event.setCancelled(true);
         }
-    }
-
-    private final Set<Block> findSurrounding(World world, Location location) {
-        Preconditions.checkNotNull(world, "World is null");
-
-        Location below = new Location(location.getWorld(), location.getX(), location.getY() - 1, location.getZ());
-
-        Set<Block> blocks = new HashSet<>();
-
-        for (int x = below.getBlockX() - 1; x <= below.getBlockX() + 1; x++) {
-            for (int z = below.getBlockZ() - 1; z <= below.getBlockZ() + 1; z++) {
-                blocks.add(world.getBlockAt(x, below.getBlockY(), z));
-            }
-        }
-        return blocks;
     }
 
 }
