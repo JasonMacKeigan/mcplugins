@@ -1,6 +1,5 @@
 package com.jsonmack.worldteleport;
 
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -43,7 +42,7 @@ public class WorldTeleportPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new TeleportModuleBreakListener(this), this);
         getServer().getPluginManager().registerEvents(new TeleportModuleCreationListener(this), this);
         getServer().getPluginManager().registerEvents(new TeleportModuleInteractListener(this), this);
-        getServer().getPluginManager().registerEvents(new TeleportInterfaceListener(this), this);
+        getServer().getPluginManager().registerEvents(new TeleportInterfaceModuleListener(this), this);
     }
 
     @Override

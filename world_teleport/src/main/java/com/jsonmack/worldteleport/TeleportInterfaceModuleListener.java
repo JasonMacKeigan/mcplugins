@@ -2,6 +2,7 @@ package com.jsonmack.worldteleport;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -16,11 +17,11 @@ import java.util.List;
 /**
  * Created by Jason MK on 2020-04-07 at 9:21 p.m.
  */
-public class TeleportInterfaceListener implements Listener {
+public class TeleportInterfaceModuleListener implements Listener {
 
     private final WorldTeleportPlugin plugin;
 
-    public TeleportInterfaceListener(WorldTeleportPlugin plugin) {
+    public TeleportInterfaceModuleListener(WorldTeleportPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -30,7 +31,7 @@ public class TeleportInterfaceListener implements Listener {
 
         InventoryHolder holder = inventory.getHolder();
 
-        if (holder instanceof TeleportInventoryHolder) {
+        if (holder != null && holder.getClass() == TeleportInventoryHolder.class) {
             event.setCancelled(true);
         }
     }
@@ -56,7 +57,6 @@ public class TeleportInterfaceListener implements Listener {
         if (inventory.getHolder() instanceof TeleportInventoryHolder) {
             if (event.getAction() != InventoryAction.PICKUP_ALL) {
                 event.setCancelled(true);
-                player.updateInventory();
                 return;
             }
             TeleportInventoryHolder holder = (TeleportInventoryHolder) inventory.getHolder();
@@ -101,7 +101,7 @@ public class TeleportInterfaceListener implements Listener {
 
             Location centerLocation = module.getLocation().getLocation();
 
-            Location teleportLocation = new Location(centerLocation.getWorld(), centerLocation.getBlockX(), centerLocation.getBlockY(), centerLocation.getBlockZ() - 1);
+            Location teleportLocation = new Location(centerLocation.getWorld(), centerLocation.getBlockX(), centerLocation.getBlockY(), centerLocation.getBlockZ());
 
             player.teleport(teleportLocation);
 
