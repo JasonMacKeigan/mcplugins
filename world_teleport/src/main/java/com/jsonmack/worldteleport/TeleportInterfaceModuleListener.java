@@ -40,7 +40,9 @@ public class TeleportInterfaceModuleListener implements Listener {
     public void on(InventoryMoveItemEvent event) {
         Inventory inventory = event.getSource();
 
-        if (inventory.getHolder() instanceof TeleportInventoryHolder) {
+        InventoryHolder holder = inventory.getHolder();
+
+        if (holder != null && holder.getClass() == TeleportInventoryHolder.class) {
             event.setCancelled(true);
         }
     }
