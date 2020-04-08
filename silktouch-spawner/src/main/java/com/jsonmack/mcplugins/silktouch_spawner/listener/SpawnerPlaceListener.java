@@ -47,6 +47,10 @@ public class SpawnerPlaceListener implements Listener {
         PersistentDataContainer container = meta.getPersistentDataContainer();
 
         if (container.isEmpty()) {
+            CreatureSpawner spawner = (CreatureSpawner) block.getState();
+
+            spawner.setSpawnedType(EntityType.SKELETON);
+            spawner.update(false);
             return;
         }
         String type = container.get(keySet.getNamespacedKey(SpawnerNamespacedKey.TYPE), PersistentDataType.STRING);

@@ -29,7 +29,7 @@ public class SilkTouchSpawnerPlugin extends JavaPlugin {
         if (command == null) {
             throw new RuntimeException("Command for spawner is not defined in plugin.");
         }
-        command.setTabCompleter(new SpawnerCommandExecutor());
+        command.setExecutor(new SpawnerCommandExecutor());
     }
 
     public SpawnerNamespacedKeySet getSpawnerNamespacedKeySet() {

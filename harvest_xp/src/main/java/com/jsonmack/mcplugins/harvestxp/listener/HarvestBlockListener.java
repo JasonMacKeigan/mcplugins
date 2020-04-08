@@ -48,6 +48,9 @@ public class HarvestBlockListener implements Listener {
         if (!plugin.isEnabled()) {
             return;
         }
+        if (event.isCancelled()) {
+            return;
+        }
         Block block = event.getBlock();
 
         BlockData blockData = block.getBlockData();

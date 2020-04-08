@@ -63,6 +63,7 @@
         <module>one_versus_one</module>
         <module>api</module>
         <module>silktouch-spawner</module>
+        <module>world_teleport</module>
     </modules>
 
     <repositories>

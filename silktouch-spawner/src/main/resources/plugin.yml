@@ -7,6 +7,6 @@ author: "BitLong"
 
 commands:
   spawner:
-    usage: "/spawner type"
+    usage: "/<spawner> <type>"
     permission: "op"
     description: "Create a spawner of a certain type at this location."
