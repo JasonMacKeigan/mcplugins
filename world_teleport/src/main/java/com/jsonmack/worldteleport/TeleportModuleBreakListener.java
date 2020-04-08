@@ -68,7 +68,7 @@ public class TeleportModuleBreakListener implements Listener {
             return;
         }
         removeModule(module, player);
-        player.sendMessage("You broke the teleport modules base.");
+        player.sendMessage("You broke the teleport modules base, the module is broken.");
     }
 
     @EventHandler
@@ -91,6 +91,7 @@ public class TeleportModuleBreakListener implements Listener {
                 || blockLocation.getY() != moduleLocation.getY() - 1) {
             return;
         }
+        event.getPlayer().sendMessage("You broke the unique teleport module block, the module is broken.");
         removeModule(module, event.getPlayer());
     }
 
