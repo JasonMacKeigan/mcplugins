@@ -16,8 +16,6 @@ public class LocationUtils {
     public static Set<Block> findSurrounding(World world, Location location, int radiusX, int radiusY, int radiusZ) {
         Preconditions.checkNotNull(world, "World is null");
 
-        location = new Location(location.getWorld(), location.getX(), location.getY(), location.getZ());
-
         Set<Block> blocks = new HashSet<>();
 
         for (int x = location.getBlockX() - radiusX; x <= location.getBlockX() + radiusX; x++) {

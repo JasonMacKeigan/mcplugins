@@ -16,7 +16,7 @@ public class TeleportModuleService implements ConfigurationSerializable {
 
     public TeleportModuleService(List<TeleportModule> modules) {
         this.modules = modules;
-        modules.forEach(module -> materialKeys.put(module.getLocation().getMaterial(), module));
+        modules.forEach(module -> materialKeys.put(module.getTeleportLocation().getMaterial(), module));
     }
 
     @SuppressWarnings("unchecked")
@@ -26,12 +26,12 @@ public class TeleportModuleService implements ConfigurationSerializable {
 
     public void add(TeleportModule module) {
         modules.add(module);
-        materialKeys.put(module.getLocation().getMaterial(), module);
+        materialKeys.put(module.getTeleportLocation().getMaterial(), module);
     }
 
     public void remove(TeleportModule module) {
         modules.remove(module);
-        materialKeys.remove(module.getLocation().getMaterial());
+        materialKeys.remove(module.getTeleportLocation().getMaterial());
     }
 
     public Map<Material, TeleportModule> getMaterialKeys() {

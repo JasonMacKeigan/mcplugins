@@ -35,7 +35,7 @@ public class TeleportModuleInteractListener implements Listener {
         }
         List<TeleportModule> modules = plugin.getService().getModules();
 
-        TeleportModule module = modules.stream().filter(m -> m.getLocation().getLocation().equals(block.getLocation())).findAny().orElse(null);
+        TeleportModule module = modules.stream().filter(m -> m.getTeleportLocation().getLocation().equals(block.getLocation())).findAny().orElse(null);
 
         if (module == null) {
             return;

@@ -52,11 +52,11 @@ public class TeleportInventoryHolder implements InventoryHolder {
         for (int index = 0; index < modules.size(); index++) {
             TeleportModule module = modules.get(index);
 
-            Material material = module.getLocation().getMaterial();
+            Material material = module.getTeleportLocation().getMaterial();
 
             ItemStack stack = new ItemStack(material, 1);
 
-            int distance = (int) currentModule.getLocation().getLocation().distance(module.getLocation().getLocation());
+            int distance = (int) currentModule.getTeleportLocation().getLocation().distance(module.getTeleportLocation().getLocation());
 
             ItemMeta meta = stack.getItemMeta();
 

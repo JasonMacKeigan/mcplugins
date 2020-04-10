@@ -1,9 +1,7 @@
 package com.jsonmack.worldteleport;
 
-import org.apache.commons.lang.math.RandomUtils;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
+import org.bukkit.Particle;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,9 +12,6 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 /**
  * Created by Jason MK on 2020-04-07 at 9:21 p.m.
@@ -81,7 +76,7 @@ public class TeleportModuleInterfaceListener implements Listener {
         }
         List<TeleportModule> modules = plugin.getService().getModules();
 
-        TeleportModule module = modules.stream().filter(m -> m.getLocation().getMaterial() == clicked.getType()).findAny().orElse(null);
+        TeleportModule module = modules.stream().filter(m -> m.getTeleportLocation().getMaterial() == clicked.getType()).findAny().orElse(null);
 
         if (event.getClick() != ClickType.LEFT) {
             event.setCancelled(true);
@@ -102,9 +97,7 @@ public class TeleportModuleInterfaceListener implements Listener {
             player.sendMessage("You are at this teleport module and therefore cannot teleport to it.");
             return;
         }
-        final Location centerLocation = module.getLocation().getLocation();
-
-        final int distance = (int) openModule.getLocation().getLocation().distance(centerLocation);
+        final int distance = (int) openModule.getTeleportLocation().getLocation().distance(module.getTeleportLocation().getLocation());
 
         final int diamondCost = Math.max(1, distance / 1_000);
 
@@ -113,24 +106,19 @@ public class TeleportModuleInterfaceListener implements Listener {
             event.setCancelled(true);
             return;
         }
-        Set<Block> above = LocationUtils.findSurrounding(player.getWorld(), centerLocation, 1, 1, 1)
-                .stream()
-                .filter(b -> b.getLocation().getY() >= centerLocation.getY())
-                .filter(b -> !b.getLocation().equals(centerLocation))
-                .collect(Collectors.toSet());
 
-        if (above.stream().anyMatch(b -> !b.isEmpty())) {
+        if (TeleportLocationUtils.isBlocked(player.getWorld(), module)) {
             player.sendMessage("That teleport is not working, there are blocks on top of it.");
             event.setCancelled(true);
             return;
         }
-        player.getInventory().removeItem(new ItemStack(Material.DIAMOND, diamondCost));
+        event.setCancelled(true);
+        player.closeInventory();
+        player.getWorld().spawnParticle(Particle.PORTAL, openModule.getTeleportLocation().getLocation().clone().add(.5f, 1, .5f), 50);
 
-        Location teleportLocation = centerLocation.clone().add(RandomUtils.nextBoolean() ? -.5 : 1.5, 0, RandomUtils.nextBoolean() ? -.5 : 1.5);
+        TeleportToModuleEvent teleportEvent = new TeleportToModuleEvent(plugin, player, openModule, module, diamondCost);
 
-        player.teleport(teleportLocation);
-
-        player.sendMessage(String.format("The module consumes %s diamonds.", diamondCost));
+        teleportEvent.runTaskLater(plugin, 60);
     }
 
 }

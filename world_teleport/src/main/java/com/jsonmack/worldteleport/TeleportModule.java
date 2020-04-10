@@ -20,7 +20,7 @@ public class TeleportModule implements ConfigurationSerializable {
         this((TeleportLocation) values.get("teleport_location"));
     }
 
-    public TeleportLocation getLocation() {
+    public TeleportLocation getTeleportLocation() {
         return location;
     }
 

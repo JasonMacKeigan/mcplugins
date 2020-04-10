@@ -1,6 +1,5 @@
 package com.jsonmack.worldteleport;
 
-import com.google.common.base.Preconditions;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -12,9 +11,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryType;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Created by Jason MK on 2020-04-07 at 6:00 p.m.
@@ -62,7 +59,7 @@ public class TeleportModuleCreationListener implements Listener {
         if (service == null) {
             return;
         }
-        if (service.getModules().stream().anyMatch(module -> module.getLocation().getMaterial() == blockBelowTable.getType())) {
+        if (service.getModules().stream().anyMatch(module -> module.getTeleportLocation().getMaterial() == blockBelowTable.getType())) {
             player.sendMessage("You already have a teleport module with this unique type.");
             event.setCancelled(true);
             return;

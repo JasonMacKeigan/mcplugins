@@ -4,7 +4,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -34,7 +33,7 @@ public class TeleportModuleBreakListener implements Listener {
         }
         List<TeleportModule> modules = plugin.getService().getModules();
 
-        TeleportModule module = modules.stream().filter(m -> m.getLocation().getLocation().equals(block.getLocation())).findAny().orElse(null);
+        TeleportModule module = modules.stream().filter(m -> m.getTeleportLocation().getLocation().equals(block.getLocation())).findAny().orElse(null);
 
         if (module == null) {
             return;
@@ -55,7 +54,7 @@ public class TeleportModuleBreakListener implements Listener {
             return;
         }
         TeleportModule module = modules.stream()
-                .filter(m -> m.getLocation().getLocation().distance(block.getLocation()) <= 2)
+                .filter(m -> m.getTeleportLocation().getLocation().distance(block.getLocation()) <= 2)
                 .findAny().orElse(null);
 
         if (module == null) {
@@ -63,7 +62,7 @@ public class TeleportModuleBreakListener implements Listener {
         }
         Player player = event.getPlayer();
 
-        Set<Block> blocksBelow = LocationUtils.findSurroundingBelow(player.getWorld(), module.getLocation().getLocation(), 1, 0, 1);
+        Set<Block> blocksBelow = LocationUtils.findSurroundingBelow(player.getWorld(), module.getTeleportLocation().getLocation().clone(), 1, 0, 1);
 
         if (blocksBelow.stream().noneMatch(b -> b.equals(block))) {
             return;
@@ -83,7 +82,7 @@ public class TeleportModuleBreakListener implements Listener {
         if (module == null) {
             return;
         }
-        Location moduleLocation = module.getLocation().getLocation();
+        Location moduleLocation = module.getTeleportLocation().getLocation();
 
         Location blockLocation = block.getLocation();
 
