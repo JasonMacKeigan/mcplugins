@@ -8,6 +8,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.InventoryHolder;
 
 import java.io.IOException;
 import java.util.List;
@@ -97,6 +98,14 @@ public class TeleportModuleBreakListener implements Listener {
 
     private void removeModule(TeleportModule module, Player player) {
         plugin.getService().remove(module);
+
+        plugin.getServer().getOnlinePlayers().forEach(p -> {
+            InventoryHolder inventoryHolder = p.getOpenInventory().getTopInventory().getHolder();
+
+            if (inventoryHolder instanceof TeleportInventoryHolder) {
+                p.closeInventory();
+            }
+        });
         try {
             plugin.saveModules();
         } catch (IOException e) {
