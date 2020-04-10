@@ -7,9 +7,31 @@
         <groupId>com.jsonmack</groupId>
         <version>1.10-SNAPSHOT</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
+    <modelVersion>4.0.0</modelVersion>
+    <version>1.2-SNAPSHOT</version>
     <artifactId>world_teleport</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.jsonmack</groupId>
+            <artifactId>api</artifactId>
+            <version>1.10-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.classgraph</groupId>
+            <artifactId>classgraph</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+        </dependency>
+    </dependencies>
+
+    <properties>
+        <plugin.directory>${project.parent.basedir}/${plugin.directory.name}</plugin.directory>
+    </properties>
 
 </project>

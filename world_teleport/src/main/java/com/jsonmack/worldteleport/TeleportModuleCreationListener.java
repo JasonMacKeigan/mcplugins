@@ -14,6 +14,7 @@ import org.bukkit.event.inventory.InventoryType;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by Jason MK on 2020-04-07 at 6:00 p.m.
@@ -37,7 +38,7 @@ public class TeleportModuleCreationListener implements Listener {
 
         Location locationOfTable = block.getLocation().clone();
 
-        Set<Block> surrounding = LocationUtils.findSurroundingBelow(locationOfTable.getWorld(), locationOfTable, 1, 1, 0);
+        Set<Block> surrounding = LocationUtils.findSurroundingBelow(locationOfTable.getWorld(), locationOfTable, 1, 0, 1);
 
         Player player = event.getPlayer();
 

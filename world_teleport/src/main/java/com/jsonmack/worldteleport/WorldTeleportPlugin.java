@@ -42,8 +42,10 @@ public class WorldTeleportPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new TeleportModuleBreakListener(this), this);
         getServer().getPluginManager().registerEvents(new TeleportModuleCreationListener(this), this);
         getServer().getPluginManager().registerEvents(new TeleportModuleInteractListener(this), this);
-        getServer().getPluginManager().registerEvents(new TeleportInterfaceModuleListener(this), this);
+        getServer().getPluginManager().registerEvents(new TeleportModuleInterfaceListener(this), this);
     }
+
+
 
     @Override
     public void onDisable() {

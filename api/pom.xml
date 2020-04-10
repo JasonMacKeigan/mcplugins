@@ -10,6 +10,19 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>api</artifactId>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.github.classgraph</groupId>
+            <artifactId>classgraph</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+        </dependency>
+    </dependencies>
 
     <properties>
         <plugin.directory>${project.parent.basedir}/${plugin.directory.name}</plugin.directory>

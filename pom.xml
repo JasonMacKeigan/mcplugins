@@ -8,10 +8,22 @@
     <artifactId>mcplugins</artifactId>
     <packaging>pom</packaging>
     <version>1.10-SNAPSHOT</version>
-    <properties>
-        <plugin.directory.name>.plugin</plugin.directory.name>
-        <plugin.directory>${project.basedir}/${plugin.directory.name}</plugin.directory>
-    </properties>
+
+    <repositories>
+        <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+    </repositories>
+
+    <modules>
+        <module>bed_teleport</module>
+        <module>harvest_xp</module>
+        <module>one_versus_one</module>
+        <module>api</module>
+        <module>silktouch_spawner</module>
+        <module>world_teleport</module>
+    </modules>
 
     <build>
         <plugins>
@@ -26,15 +38,11 @@
             </plugin>
 
             <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
                 <version>3.2.0</version>
                 <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                    <outputDirectory>${plugin.directory}</outputDirectory>
-                    <finalName>${project.name}-${project.version}</finalName>
-                    <appendAssemblyId>false</appendAssemblyId>
+                    <forceCreation>true</forceCreation>
                 </configuration>
             </plugin>
 
@@ -50,6 +58,11 @@
                         </goals>
                         <configuration>
                             <minimizeJar>true</minimizeJar>
+                            <artifactSet>
+                                <excludes>
+                                    <exclude>junit:junit</exclude>
+                                </excludes>
+                            </artifactSet>
                         </configuration>
                     </execution>
                 </executions>
@@ -57,55 +70,34 @@
         </plugins>
     </build>
 
-    <modules>
-        <module>bed_teleport</module>
-        <module>harvest_xp</module>
-        <module>one_versus_one</module>
-        <module>api</module>
-        <module>silktouch-spawner</module>
-        <module>world_teleport</module>
-    </modules>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.github.classgraph</groupId>
+                <artifactId>classgraph</artifactId>
+                <version>4.8.68</version>
+            </dependency>
 
-    <repositories>
-        <repository>
-            <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/repositories/releases/</url>
-        </repository>
-    </repositories>
+            <dependency>
+                <groupId>org.spigotmc</groupId>
+                <artifactId>spigot-api</artifactId>
+                <version>1.15.2-R0.1-SNAPSHOT</version>
+            </dependency>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.15.2-R0.1-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.13</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.15.2-R0.1-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-
-        <dependency>
-            <groupId>org.yaml</groupId>
-            <artifactId>snakeyaml</artifactId>
-            <version>1.26</version>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.reflections</groupId>
-            <artifactId>reflections</artifactId>
-            <version>0.9.12</version>
-        </dependency>
-    </dependencies>
+    <properties>
+        <plugin.directory.name>.plugin</plugin.directory.name>
+        <plugin.directory>${project.basedir}/${plugin.directory.name}</plugin.directory>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
 
 </project>

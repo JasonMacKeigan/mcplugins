@@ -62,7 +62,7 @@ public class TeleportModuleBreakListener implements Listener {
         }
         Player player = event.getPlayer();
 
-        Set<Block> blocksBelow = LocationUtils.findSurroundingBelow(player.getWorld(), module.getLocation().getLocation(), 1, 1, 0);
+        Set<Block> blocksBelow = LocationUtils.findSurroundingBelow(player.getWorld(), module.getLocation().getLocation(), 1, 0, 1);
 
         if (blocksBelow.stream().noneMatch(b -> b.equals(block))) {
             return;
