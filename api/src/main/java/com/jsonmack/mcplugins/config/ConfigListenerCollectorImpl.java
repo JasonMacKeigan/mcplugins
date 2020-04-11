@@ -31,18 +31,15 @@ final class ConfigListenerCollectorImpl<T extends Config> implements ConfigListe
     @SuppressWarnings("unchecked")
     @Override
     public Map<Field, ConfigListener<T, ?>> collect() {
-        try (ScanResult result = new ClassGraph()
-                .whitelistPackages(".").
-                enableFieldInfo().scan()) {
+        try (ScanResult result = new ClassGraph().enableAllInfo().whitelistPackages("*").scan()) {
             ClassInfoList classesWithConfigField = result.getClassesWithFieldAnnotation(ConfigField.class.getName());
 
             List<Field> fields = classesWithConfigField
                     .stream()
-                    .flatMap(classInfo -> classInfo.getFieldInfo().filter(filter -> filter.hasAnnotation(ConfigField.class.getName())).stream())
+                    .flatMap(classInfo -> classInfo.getFieldInfo().filter(filter ->
+                            filter.hasAnnotation(ConfigField.class.getName())).stream())
                     .map(FieldInfo::loadClassAndGetField)
                     .collect(Collectors.toList());
-
-            System.out.println("Fields: " + fields);
 
             Map<Field, ConfigListener<T, ?>> listeners = new HashMap<>();
 

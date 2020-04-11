@@ -16,19 +16,19 @@ import java.util.List;
  */
 public class TeleportInventoryHolder implements InventoryHolder {
 
-    private final World world;
-
     private final TeleportModule module;
 
     private final List<TeleportModule> modules;
 
     private final Inventory inventory;
 
-    public TeleportInventoryHolder(World world, TeleportModule module, List<TeleportModule> modules) {
-        this.world = world;
+    private final WorldTeleportPlugin plugin;
+
+    public TeleportInventoryHolder(WorldTeleportPlugin plugin, TeleportModule module, List<TeleportModule> modules) {
+        this.plugin = plugin;
         this.module = module;
         this.modules = modules;
-        this.inventory = create(world, module, modules);
+        this.inventory = create(module, modules);
     }
 
     public TeleportModule getModule() {
@@ -44,7 +44,7 @@ public class TeleportInventoryHolder implements InventoryHolder {
         return inventory;
     }
 
-    private Inventory create(World world, TeleportModule currentModule, List<TeleportModule> modules) {
+    private Inventory create(TeleportModule currentModule, List<TeleportModule> modules) {
         Inventory inventory = Bukkit.createInventory(this, 9, "Teleport Modules");
 
         inventory.setMaxStackSize(1);
@@ -61,7 +61,8 @@ public class TeleportInventoryHolder implements InventoryHolder {
             ItemMeta meta = stack.getItemMeta();
 
             if (meta != null) {
-                meta.setLore(Collections.singletonList(String.format("Cost: %s Diamonds", Math.max(1, distance / 1_000))));
+                meta.setLore(Collections.singletonList(String.format("Cost: %s Diamonds",
+                        Math.max(1, Math.min(64, distance / plugin.getTeleportModuleConfig().getTilesPerDiamond())))));
             }
             stack.setItemMeta(meta);
 

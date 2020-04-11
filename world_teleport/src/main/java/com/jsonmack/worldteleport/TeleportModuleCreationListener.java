@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.util.BoundingBox;
 
 import java.io.IOException;
 import java.util.Set;
@@ -59,6 +60,24 @@ public class TeleportModuleCreationListener implements Listener {
         if (service == null) {
             return;
         }
+        if (blockBelowTable.isLiquid()) {
+            player.sendMessage("The center block cannot be lava or water.");
+            event.setCancelled(true);
+            return;
+        }
+        BoundingBox blockBelowBoudningBox = blockBelowTable.getBoundingBox();
+
+        if (blockBelowBoudningBox.getWidthX() != 1 || blockBelowBoudningBox.getWidthZ() != 1|| blockBelowBoudningBox.getHeight() != 1) {
+            player.sendMessage("The center block must be square. It is too small or too big.");
+            event.setCancelled(true);
+            return;
+        }
+        if (!blockBelowTable.getType().isSolid()) {
+            player.sendMessage("The center block must be solid.");
+            event.setCancelled(true);
+            return;
+        }
+
         if (service.getModules().stream().anyMatch(module -> module.getTeleportLocation().getMaterial() == blockBelowTable.getType())) {
             player.sendMessage("You already have a teleport module with this unique type.");
             event.setCancelled(true);

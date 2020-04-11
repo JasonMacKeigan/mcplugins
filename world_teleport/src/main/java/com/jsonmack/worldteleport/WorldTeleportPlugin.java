@@ -1,5 +1,9 @@
 package com.jsonmack.worldteleport;
 
+import com.jsonmack.mcplugins.config.ConfigModifiedListener;
+import com.jsonmack.mcplugins.config.ConfigService;
+import com.jsonmack.mcplugins.config.command.ConfigTabExecutor;
+import com.jsonmack.worldteleport.config.TeleportModuleConfig;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -10,22 +14,28 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Created by Jason MK on 2020-04-07 at 6:21 p.m.
  */
-public class WorldTeleportPlugin extends JavaPlugin {
+public class WorldTeleportPlugin extends JavaPlugin implements ConfigModifiedListener<TeleportModuleConfig> {
 
     private static final String MODULE_FILE_NAME = "modules.yml";
+
+    private TeleportModuleConfig config;
 
     private YamlConfiguration moduleServiceConfiguration = new YamlConfiguration();
 
     private TeleportModuleService service;
 
+    private ConfigService<TeleportModuleConfig> configService;
+
     @Override
     public void onEnable() {
         super.onEnable();
 
+        ConfigurationSerialization.registerClass(TeleportModuleConfig.class);
         ConfigurationSerialization.registerClass(TeleportLocation.class);
         ConfigurationSerialization.registerClass(TeleportModuleService.class);
         ConfigurationSerialization.registerClass(TeleportModule.class);
@@ -43,9 +53,13 @@ public class WorldTeleportPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new TeleportModuleCreationListener(this), this);
         getServer().getPluginManager().registerEvents(new TeleportModuleInteractListener(this), this);
         getServer().getPluginManager().registerEvents(new TeleportModuleInterfaceListener(this), this);
+
+        config = getConfig().getSerializable("config", TeleportModuleConfig.class);
+
+        configService = new ConfigService.Builder<>(config, this).build();
+
+        Objects.requireNonNull(getCommand("teleportmodule")).setExecutor(new ConfigTabExecutor<>(configService));
     }
-
-
 
     @Override
     public void onDisable() {
@@ -78,7 +92,17 @@ public class WorldTeleportPlugin extends JavaPlugin {
         moduleServiceConfiguration.load(moduleFile);
     }
 
+    @Override
+    public void onModify(TeleportModuleConfig config) {
+        getConfig().set("config", config);
+        saveConfig();
+    }
+
     public TeleportModuleService getService() {
         return service;
+    }
+
+    public TeleportModuleConfig getTeleportModuleConfig() {
+        return config;
     }
 }

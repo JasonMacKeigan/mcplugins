@@ -21,7 +21,8 @@ class ConfigTabResultGeneratorImpl<T extends Config> implements ConfigTabResultG
 
         List<String> results = new ArrayList<>();
 
-        List<Field> fields = Stream.of(config.getClass().getDeclaredFields()).filter(f -> f.isAnnotationPresent(ConfigField.class)).collect(Collectors.toList());
+        List<Field> fields = Stream.of(config.getClass().getDeclaredFields())
+                .filter(f -> f.isAnnotationPresent(ConfigField.class)).collect(Collectors.toList());
 
         if (argumentList.size() < 2) {
             fields.forEach(field -> results.add(field.getName()));

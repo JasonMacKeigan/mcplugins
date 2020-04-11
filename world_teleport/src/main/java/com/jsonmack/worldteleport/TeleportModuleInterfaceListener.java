@@ -99,7 +99,7 @@ public class TeleportModuleInterfaceListener implements Listener {
         }
         final int distance = (int) openModule.getTeleportLocation().getLocation().distance(module.getTeleportLocation().getLocation());
 
-        final int diamondCost = Math.max(1, distance / 1_000);
+        final int diamondCost = Math.max(1, distance / plugin.getTeleportModuleConfig().getTilesPerDiamond());
 
         if (!player.getInventory().contains(Material.DIAMOND, diamondCost)) {
             player.sendMessage(String.format("You need at least %s diamonds to teleport to this module.", diamondCost));

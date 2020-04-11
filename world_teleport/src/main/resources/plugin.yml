@@ -1,6 +1,9 @@
 name: 'WolrdTeleport'
-version: '1.3'
+version: '1.4'
 api-version: '1.15'
 main: 'com.jsonmack.worldteleport.WorldTeleportPlugin'
 description: 'A plugin that allows you to create structures that can teleport you around the world'
-
+commands:
+  teleportmodule:
+    description: 'Change the default configuration values for the world teleport module.'
+    permission: 'op'

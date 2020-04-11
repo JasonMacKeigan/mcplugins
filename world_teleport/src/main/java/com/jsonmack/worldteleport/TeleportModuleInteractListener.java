@@ -40,7 +40,7 @@ public class TeleportModuleInteractListener implements Listener {
         if (module == null) {
             return;
         }
-        event.getPlayer().openInventory(new TeleportInventoryHolder(event.getPlayer().getWorld(), module, modules).getInventory());
+        event.getPlayer().openInventory(new TeleportInventoryHolder(plugin, module, modules).getInventory());
         event.setCancelled(true);
     }
 }
