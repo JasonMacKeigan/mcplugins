@@ -25,8 +25,4 @@
         </dependency>
     </dependencies>
 
-    <properties>
-        <plugin.directory>${project.parent.basedir}/${plugin.directory.name}</plugin.directory>
-    </properties>
-
 </project>

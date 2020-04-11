@@ -41,9 +41,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.2.0</version>
-                <configuration>
-                    <forceCreation>true</forceCreation>
-                </configuration>
             </plugin>
 
             <plugin>
@@ -94,8 +91,6 @@
     </dependencyManagement>
 
     <properties>
-        <plugin.directory.name>.plugin</plugin.directory.name>
-        <plugin.directory>${project.basedir}/${plugin.directory.name}</plugin.directory>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>

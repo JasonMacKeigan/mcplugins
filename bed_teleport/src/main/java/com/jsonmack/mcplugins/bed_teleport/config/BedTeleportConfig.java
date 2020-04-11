@@ -6,7 +6,7 @@ import com.jsonmack.mcplugins.bed_teleport.config.fields.BedTeleportConfigCostAm
 import com.jsonmack.mcplugins.bed_teleport.config.fields.BedTeleportConfigCostTypeListener;
 import com.jsonmack.mcplugins.bed_teleport.cost.BedTeleportCostType;
 import com.jsonmack.mcplugins.config.Config;
-import com.jsonmack.mcplugins.config.ConfigField;
+import com.jsonmack.mcplugins.config.field.ConfigField;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 import java.util.HashMap;

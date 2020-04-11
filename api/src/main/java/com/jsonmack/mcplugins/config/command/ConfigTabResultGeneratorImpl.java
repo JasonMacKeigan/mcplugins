@@ -1,7 +1,7 @@
 package com.jsonmack.mcplugins.config.command;
 
 import com.jsonmack.mcplugins.config.Config;
-import com.jsonmack.mcplugins.config.ConfigField;
+import com.jsonmack.mcplugins.config.field.ConfigField;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

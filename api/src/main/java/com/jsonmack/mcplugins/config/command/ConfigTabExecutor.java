@@ -1,13 +1,16 @@
 package com.jsonmack.mcplugins.config.command;
 
 import com.jsonmack.mcplugins.config.*;
+import com.jsonmack.mcplugins.config.field.ConfigField;
+import com.jsonmack.mcplugins.config.field.ConfigFieldAcceptanceResult;
+import com.jsonmack.mcplugins.config.field.ConfigFieldListener;
+import com.jsonmack.mcplugins.config.field.ConfigFieldListenerParseException;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -61,7 +64,7 @@ public final class ConfigTabExecutor<T extends Config> implements TabExecutor {
 
         String value = args[1];
 
-        ConfigListener<T, Object> listener = (ConfigListener<T, Object>) service.getListenersByFieldName().get(fieldName);
+        ConfigFieldListener<T, Object> listener = (ConfigFieldListener<T, Object>) service.getListenersByFieldName().get(fieldName);
 
         if (listener == null) {
             sender.sendMessage(String.format("%sUnable to find listener for the field <%s>.", ChatColor.RED, fieldName));
@@ -71,11 +74,11 @@ public final class ConfigTabExecutor<T extends Config> implements TabExecutor {
 
         try {
             parsed = listener.parse(value);
-        } catch (ConfigListenerParseException e) {
+        } catch (ConfigFieldListenerParseException e) {
             sender.sendMessage(String.format("%sUnable to parse input <%s>", ChatColor.RED, value));
         }
 
-        ConfigListenerAcceptableResult result = listener.acceptable(parsed);
+        ConfigFieldAcceptanceResult result = listener.acceptable(parsed);
 
         if (!result.isAcceptable()) {
             String message = result.getUnacceptableMessage();

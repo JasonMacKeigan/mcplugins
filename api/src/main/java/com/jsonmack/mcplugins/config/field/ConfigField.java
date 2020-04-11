@@ -1,4 +1,4 @@
-package com.jsonmack.mcplugins.config;
+package com.jsonmack.mcplugins.config.field;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -12,6 +12,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface ConfigField {
 
-    Class<? extends ConfigListener<?, ?>> value();
+    Class<? extends ConfigFieldListener<?, ?>> value();
 
 }

@@ -1,18 +1,18 @@
-package com.jsonmack.mcplugins.config;
+package com.jsonmack.mcplugins.config.field;
 
 import java.security.PrivilegedActionException;
 
 /**
  * Created by Jason MK on 2020-03-21 at 12:09 a.m.
  */
-public class ConfigListenerParseException extends Exception {
+public class ConfigFieldListenerParseException extends Exception {
 
     /**
      * Constructs a new exception with {@code null} as its detail message.
      * The cause is not initialized, and may subsequently be initialized by a
      * call to {@link #initCause}.
      */
-    public ConfigListenerParseException() {
+    public ConfigFieldListenerParseException() {
         super();
     }
 
@@ -24,7 +24,7 @@ public class ConfigListenerParseException extends Exception {
      * @param message the detail message. The detail message is saved for
      *                later retrieval by the {@link #getMessage()} method.
      */
-    public ConfigListenerParseException(String message) {
+    public ConfigFieldListenerParseException(String message) {
         super(message);
     }
 
@@ -42,7 +42,7 @@ public class ConfigListenerParseException extends Exception {
      *                unknown.)
      * @since 1.4
      */
-    public ConfigListenerParseException(String message, Throwable cause) {
+    public ConfigFieldListenerParseException(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -60,7 +60,7 @@ public class ConfigListenerParseException extends Exception {
      *              unknown.)
      * @since 1.4
      */
-    public ConfigListenerParseException(Throwable cause) {
+    public ConfigFieldListenerParseException(Throwable cause) {
         super(cause);
     }
 
@@ -78,7 +78,7 @@ public class ConfigListenerParseException extends Exception {
      *                           be writable
      * @since 1.7
      */
-    protected ConfigListenerParseException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    protected ConfigFieldListenerParseException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

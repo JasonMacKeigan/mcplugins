@@ -1,5 +1,8 @@
 package com.jsonmack.mcplugins.config;
 
+import com.jsonmack.mcplugins.config.field.ConfigFieldListener;
+import com.jsonmack.mcplugins.config.field.ConfigFieldListenerCollector;
+
 import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Objects;
@@ -11,16 +14,16 @@ import java.util.stream.Collectors;
 public class ConfigService<T extends Config> {
 
     //TODO remove type erasure oof, i need more coffee, and more bananas
-    private final Map<Field, ConfigListener<T, ?>> listeners;
+    private final Map<Field, ConfigFieldListener<T, ?>> listeners;
 
     //TODO remove listeners if possible and only refer to by String to increase performance, no need to do additional reflection
-    private final Map<String, ConfigListener<T, ?>> listenersByFieldName;
+    private final Map<String, ConfigFieldListener<T, ?>> listenersByFieldName;
 
     private T config;
 
     private final ConfigModifiedListener<T> modifiedListener;
 
-    private ConfigService(T config, Map<Field, ConfigListener<T, ?>> listeners, ConfigModifiedListener<T> modifiedListener) {
+    private ConfigService(T config, Map<Field, ConfigFieldListener<T, ?>> listeners, ConfigModifiedListener<T> modifiedListener) {
         this.config = config;
         this.listeners = listeners;
         this.listenersByFieldName = listeners.entrySet().stream()
@@ -36,11 +39,11 @@ public class ConfigService<T extends Config> {
         this.config = Objects.requireNonNull(config);
     }
 
-    public Map<String, ConfigListener<T, ?>> getListenersByFieldName() {
+    public Map<String, ConfigFieldListener<T, ?>> getListenersByFieldName() {
         return listenersByFieldName;
     }
 
-    public Map<Field, ConfigListener<T, ?>> getListeners() {
+    public Map<Field, ConfigFieldListener<T, ?>> getListeners() {
         return listeners;
     }
 
@@ -50,13 +53,13 @@ public class ConfigService<T extends Config> {
 
     public final static class Builder<T extends Config> {
 
-        private final Map<Field, ConfigListener<T, ?>> listeners;
+        private final Map<Field, ConfigFieldListener<T, ?>> listeners;
 
         private final T config;
 
         private final ConfigModifiedListener<T> modifiedListener;
 
-        public Builder(T config, ConfigListenerCollector<T> collector, ConfigModifiedListener<T> modifiedListener) {
+        public Builder(T config, ConfigFieldListenerCollector<T> collector, ConfigModifiedListener<T> modifiedListener) {
             this.config = config;
             this.listeners = collector.collect();
             this.modifiedListener = modifiedListener;

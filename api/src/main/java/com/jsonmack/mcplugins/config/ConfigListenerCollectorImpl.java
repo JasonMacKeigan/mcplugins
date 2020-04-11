@@ -1,5 +1,8 @@
 package com.jsonmack.mcplugins.config;
 
+import com.jsonmack.mcplugins.config.field.ConfigField;
+import com.jsonmack.mcplugins.config.field.ConfigFieldListener;
+import com.jsonmack.mcplugins.config.field.ConfigFieldListenerCollector;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfoList;
 import io.github.classgraph.FieldInfo;
@@ -18,7 +21,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Jason MK on 2020-03-20 at 10:59 p.m.
  */
-final class ConfigListenerCollectorImpl<T extends Config> implements ConfigListenerCollector<T> {
+final class ConfigListenerCollectorImpl<T extends Config> implements ConfigFieldListenerCollector<T> {
 
 //    private static final Configuration REFLECTION_CONFIGURATION = new ConfigurationBuilder()
 //            .addScanners(new FieldAnnotationsScanner())
@@ -30,7 +33,7 @@ final class ConfigListenerCollectorImpl<T extends Config> implements ConfigListe
 
     @SuppressWarnings("unchecked")
     @Override
-    public Map<Field, ConfigListener<T, ?>> collect() {
+    public Map<Field, ConfigFieldListener<T, ?>> collect() {
         try (ScanResult result = new ClassGraph().enableAllInfo().whitelistPackages("*").scan()) {
             ClassInfoList classesWithConfigField = result.getClassesWithFieldAnnotation(ConfigField.class.getName());
 
@@ -41,7 +44,7 @@ final class ConfigListenerCollectorImpl<T extends Config> implements ConfigListe
                     .map(FieldInfo::loadClassAndGetField)
                     .collect(Collectors.toList());
 
-            Map<Field, ConfigListener<T, ?>> listeners = new HashMap<>();
+            Map<Field, ConfigFieldListener<T, ?>> listeners = new HashMap<>();
 
             if (fields.isEmpty()) {
                 return listeners;
@@ -50,7 +53,7 @@ final class ConfigListenerCollectorImpl<T extends Config> implements ConfigListe
             for (Field field : fields) {
                 ConfigField configField = field.getAnnotation(ConfigField.class);
 
-                Class<? extends ConfigListener<?, ?>> listenerClass = configField.value();
+                Class<? extends ConfigFieldListener<?, ?>> listenerClass = configField.value();
 
                 if (!Modifier.isPublic(listenerClass.getModifiers())) {
                     throw new ConfigServiceBuildException(String.format("The class %s must be defined with a public modifier.", listenerClass.getSimpleName()));
@@ -58,7 +61,7 @@ final class ConfigListenerCollectorImpl<T extends Config> implements ConfigListe
                 Type listenerClassInterfaceClass = listenerClass.getGenericInterfaces()[0];
 
                 if (listenerClassInterfaceClass == null) {
-                    throw new ConfigServiceBuildException(String.format("Listener class does not implement %s.", ConfigListener.class.getSimpleName()));
+                    throw new ConfigServiceBuildException(String.format("Listener class does not implement %s.", ConfigFieldListener.class.getSimpleName()));
                 }
                 Type[] listenerClassInterfaceClassTypes = ((ParameterizedType) listenerClassInterfaceClass).getActualTypeArguments();
 
@@ -75,7 +78,7 @@ final class ConfigListenerCollectorImpl<T extends Config> implements ConfigListe
                 try {
                     field.setAccessible(true);
 
-                    ConfigListener<T, ?> listener = (ConfigListener<T, ?>) listenerClass.newInstance();
+                    ConfigFieldListener<T, ?> listener = (ConfigFieldListener<T, ?>) listenerClass.newInstance();
 
                     listeners.put(field, listener);
                 } catch (InstantiationException | IllegalAccessException e) {
