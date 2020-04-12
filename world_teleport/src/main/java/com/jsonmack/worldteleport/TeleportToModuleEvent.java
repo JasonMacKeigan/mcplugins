@@ -77,7 +77,7 @@ public class TeleportToModuleEvent extends BukkitRunnable {
 
             Duration durationRemaining = Duration.between(LocalDateTime.now(), LocalDateTime.now().plusNanos(difference));
 
-            cancel(String.format("Please wait another %s.",
+            player.sendMessage(String.format("You teleported recently, please wait %s.",
                     DurationFormatUtils.formatDurationWords(durationRemaining.toMillis(), true, false)));
             return;
         }
