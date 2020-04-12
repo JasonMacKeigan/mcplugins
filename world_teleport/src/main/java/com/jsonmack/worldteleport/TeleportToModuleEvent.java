@@ -1,17 +1,23 @@
 package com.jsonmack.worldteleport;
 
+import com.jsonmack.worldteleport.config.TeleportModuleConfig;
 import org.apache.commons.lang.math.RandomUtils;
+import org.apache.commons.lang.time.DurationFormatUtils;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Jason MK on 2020-04-10 at 12:49 p.m.
  */
 public class TeleportToModuleEvent extends BukkitRunnable {
 
-    private final WorldTeleportPlugin plugin;
+    private final TeleportModulePlugin plugin;
 
     private final Player player;
 
@@ -21,7 +27,7 @@ public class TeleportToModuleEvent extends BukkitRunnable {
 
     private final int diamondCost;
 
-    public TeleportToModuleEvent(WorldTeleportPlugin plugin, Player player, TeleportModule from, TeleportModule to, int diamondCost) {
+    public TeleportToModuleEvent(TeleportModulePlugin plugin, Player player, TeleportModule from, TeleportModule to, int diamondCost) {
         this.plugin = plugin;
         this.player = player;
         this.from = from;
@@ -61,6 +67,21 @@ public class TeleportToModuleEvent extends BukkitRunnable {
             cancel(String.format("You need at least %s diamonds to go to this location.", diamondCost));
             return;
         }
+        TeleportModuleCooldownService cooldownService = plugin.getCooldownService();
+
+        if (cooldownService.isOnCooldown(player.getUniqueId())) {
+            TeleportModuleConfig config = plugin.getTeleportModuleConfig();
+
+            long difference = TimeUnit.NANOSECONDS.convert(config.getCooldownDuration(), config.getCooldownUnit())
+                    - cooldownService.cooldownRemainingNano(player.getUniqueId());
+
+            Duration durationRemaining = Duration.between(LocalDateTime.now(), LocalDateTime.now().plusNanos(difference));
+
+            cancel(String.format("Please wait another %s.",
+                    DurationFormatUtils.formatDurationWords(durationRemaining.toMillis(), true, false)));
+            return;
+        }
+        cooldownService.cooldown(player.getUniqueId());
         player.playSound(from.getTeleportLocation().getLocation().clone(), Sound.ENTITY_SHULKER_TELEPORT, 1f, 0f);
         player.getInventory().removeItem(new ItemStack(Material.DIAMOND, diamondCost));
 

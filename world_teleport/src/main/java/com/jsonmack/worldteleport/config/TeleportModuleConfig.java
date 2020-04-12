@@ -32,9 +32,9 @@ public class TeleportModuleConfig implements Config, ConfigurationSerializable {
     }
 
     public TeleportModuleConfig(Map<String, Object> values) {
-        this((int) values.get("tiles_per_diamond"),
-                Long.parseLong((String) values.get("cooldown_duration")),
-                TimeUnit.valueOf((String) values.get("cooldown_unit")));
+        this((int) values.getOrDefault("tiles_per_diamond", 1_000),
+                Long.parseLong((String) values.getOrDefault("cooldown_duration", "60")),
+                TimeUnit.valueOf((String) values.getOrDefault("cooldown_unit", "SECONDS")));
     }
 
     public TeleportModuleConfig withTilesPerDiamond(int tilesPerDiamond) {
@@ -51,6 +51,14 @@ public class TeleportModuleConfig implements Config, ConfigurationSerializable {
 
     public int getTilesPerDiamond() {
         return tilesPerDiamond;
+    }
+
+    public long getCooldownDuration() {
+        return cooldownDuration;
+    }
+
+    public TimeUnit getCooldownUnit() {
+        return cooldownUnit;
     }
 
     @Override

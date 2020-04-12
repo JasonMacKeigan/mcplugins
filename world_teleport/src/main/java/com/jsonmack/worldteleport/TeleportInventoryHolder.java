@@ -2,7 +2,6 @@ package com.jsonmack.worldteleport;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -22,9 +21,9 @@ public class TeleportInventoryHolder implements InventoryHolder {
 
     private final Inventory inventory;
 
-    private final WorldTeleportPlugin plugin;
+    private final TeleportModulePlugin plugin;
 
-    public TeleportInventoryHolder(WorldTeleportPlugin plugin, TeleportModule module, List<TeleportModule> modules) {
+    public TeleportInventoryHolder(TeleportModulePlugin plugin, TeleportModule module, List<TeleportModule> modules) {
         this.plugin = plugin;
         this.module = module;
         this.modules = modules;

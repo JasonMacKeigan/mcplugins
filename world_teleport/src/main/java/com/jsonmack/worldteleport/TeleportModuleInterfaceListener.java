@@ -1,5 +1,7 @@
 package com.jsonmack.worldteleport;
 
+import com.jsonmack.worldteleport.config.TeleportModuleConfig;
+import org.apache.commons.lang.time.DurationFormatUtils;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.entity.HumanEntity;
@@ -11,16 +13,19 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Jason MK on 2020-04-07 at 9:21 p.m.
  */
 public class TeleportModuleInterfaceListener implements Listener {
 
-    private final WorldTeleportPlugin plugin;
+    private final TeleportModulePlugin plugin;
 
-    public TeleportModuleInterfaceListener(WorldTeleportPlugin plugin) {
+    public TeleportModuleInterfaceListener(TeleportModulePlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -109,6 +114,21 @@ public class TeleportModuleInterfaceListener implements Listener {
 
         if (TeleportLocationUtils.isBlocked(player.getWorld(), module)) {
             player.sendMessage("That teleport is not working, there are blocks on top of it.");
+            event.setCancelled(true);
+            return;
+        }
+        TeleportModuleCooldownService cooldownService = plugin.getCooldownService();
+
+        if (cooldownService.isOnCooldown(player.getUniqueId())) {
+            TeleportModuleConfig config = plugin.getTeleportModuleConfig();
+
+            long difference = TimeUnit.NANOSECONDS.convert(config.getCooldownDuration(), config.getCooldownUnit())
+                    - cooldownService.cooldownRemainingNano(player.getUniqueId());
+
+            Duration durationRemaining = Duration.between(LocalDateTime.now(), LocalDateTime.now().plusNanos(difference));
+
+            player.sendMessage(String.format("You teleported recently, please wait %s.",
+                    DurationFormatUtils.formatDurationWords(durationRemaining.toMillis(), true, false)));
             event.setCancelled(true);
             return;
         }

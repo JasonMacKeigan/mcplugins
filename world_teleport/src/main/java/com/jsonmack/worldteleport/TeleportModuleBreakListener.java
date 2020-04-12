@@ -18,9 +18,9 @@ import java.util.Set;
  */
 public class TeleportModuleBreakListener implements Listener {
 
-    private final WorldTeleportPlugin plugin;
+    private final TeleportModulePlugin plugin;
 
-    public TeleportModuleBreakListener(WorldTeleportPlugin plugin) {
+    public TeleportModuleBreakListener(TeleportModulePlugin plugin) {
         this.plugin = plugin;
     }
 

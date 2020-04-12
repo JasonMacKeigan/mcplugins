@@ -1,3 +1,5 @@
 config:
   ==: com.jsonmack.worldteleport.config.TeleportModuleConfig
   tiles_per_diamond: 1000
+  cooldownUnit: 'SECONDS'
+  cooldownDuration: '60'

@@ -19,9 +19,9 @@ import java.util.Set;
  */
 public class TeleportModuleCreationListener implements Listener {
 
-    private final WorldTeleportPlugin plugin;
+    private final TeleportModulePlugin plugin;
 
-    public TeleportModuleCreationListener(WorldTeleportPlugin plugin) {
+    public TeleportModuleCreationListener(TeleportModulePlugin plugin) {
         this.plugin = plugin;
     }
 

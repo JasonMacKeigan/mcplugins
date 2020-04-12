@@ -14,9 +14,9 @@ import java.util.List;
  */
 public class TeleportModuleInteractListener implements Listener {
 
-    private final WorldTeleportPlugin plugin;
+    private final TeleportModulePlugin plugin;
 
-    public TeleportModuleInteractListener(WorldTeleportPlugin plugin) {
+    public TeleportModuleInteractListener(TeleportModulePlugin plugin) {
         this.plugin = plugin;
     }
 

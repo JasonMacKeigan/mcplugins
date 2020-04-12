@@ -6,6 +6,7 @@ import com.jsonmack.mcplugins.config.command.ConfigTabExecutor;
 import com.jsonmack.worldteleport.config.TeleportModuleConfig;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,9 +20,11 @@ import java.util.Objects;
 /**
  * Created by Jason MK on 2020-04-07 at 6:21 p.m.
  */
-public class WorldTeleportPlugin extends JavaPlugin implements ConfigModifiedListener<TeleportModuleConfig> {
+public class TeleportModulePlugin extends JavaPlugin implements ConfigModifiedListener<TeleportModuleConfig> {
 
     private static final String MODULE_FILE_NAME = "modules.yml";
+
+    private final TeleportModuleCooldownService cooldownService = new TeleportModuleCooldownService(this);
 
     private TeleportModuleConfig config;
 
@@ -53,6 +56,7 @@ public class WorldTeleportPlugin extends JavaPlugin implements ConfigModifiedLis
         getServer().getPluginManager().registerEvents(new TeleportModuleCreationListener(this), this);
         getServer().getPluginManager().registerEvents(new TeleportModuleInteractListener(this), this);
         getServer().getPluginManager().registerEvents(new TeleportModuleInterfaceListener(this), this);
+        getServer().getPluginManager().registerEvents(new TeleportModuleLogoutListener(this), this);
 
         config = getConfig().getSerializable("config", TeleportModuleConfig.class);
 
@@ -94,6 +98,7 @@ public class WorldTeleportPlugin extends JavaPlugin implements ConfigModifiedLis
 
     @Override
     public void onModify(TeleportModuleConfig config) {
+        this.config = config;
         getConfig().set("config", config);
         saveConfig();
     }
@@ -104,5 +109,9 @@ public class WorldTeleportPlugin extends JavaPlugin implements ConfigModifiedLis
 
     public TeleportModuleConfig getTeleportModuleConfig() {
         return config;
+    }
+
+    public TeleportModuleCooldownService getCooldownService() {
+        return cooldownService;
     }
 }
