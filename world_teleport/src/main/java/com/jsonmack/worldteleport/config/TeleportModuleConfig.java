@@ -2,6 +2,7 @@ package com.jsonmack.worldteleport.config;
 
 import com.jsonmack.mcplugins.config.Config;
 import com.jsonmack.mcplugins.config.field.ConfigField;
+import com.jsonmack.worldteleport.TeleportModule;
 import com.jsonmack.worldteleport.config.field.CooldownDurationFieldListener;
 import com.jsonmack.worldteleport.config.field.CooldownUnitFieldListener;
 import com.jsonmack.worldteleport.config.field.TilesPerDiamondFieldListener;
@@ -15,6 +16,8 @@ import java.util.concurrent.TimeUnit;
  * Created by Jason MK on 2020-04-10 at 10:07 p.m.
  */
 public class TeleportModuleConfig implements Config, ConfigurationSerializable {
+
+    private static final TeleportModuleConfig DEFAULT_CONFIG = new TeleportModuleConfig(1_000, 60, TimeUnit.SECONDS, true);
 
     @ConfigField(value = TilesPerDiamondFieldListener.class)
     private final int tilesPerDiamond;
@@ -35,10 +38,10 @@ public class TeleportModuleConfig implements Config, ConfigurationSerializable {
     }
 
     public TeleportModuleConfig(Map<String, Object> values) {
-        this((int) values.getOrDefault("tiles_per_diamond", 1_000),
-                Long.parseLong((String) values.getOrDefault("cooldown_duration", "60")),
-                TimeUnit.valueOf((String) values.getOrDefault("cooldown_unit", "SECONDS")),
-                (boolean) values.getOrDefault("cooldown_enabled", "true"));
+        this((int) values.getOrDefault("tiles_per_diamond", DEFAULT_CONFIG.getTilesPerDiamond()),
+                Long.parseLong((String) values.getOrDefault("cooldown_duration", Long.toString(DEFAULT_CONFIG.getCooldownDuration()))),
+                TimeUnit.valueOf((String) values.getOrDefault("cooldown_unit", DEFAULT_CONFIG.getCooldownUnit().name())),
+                (boolean) values.getOrDefault("cooldown_enabled", DEFAULT_CONFIG.isCooldownEnabled()));
     }
 
     public TeleportModuleConfig withTilesPerDiamond(int tilesPerDiamond) {
