@@ -64,7 +64,13 @@ public class TeleportToModuleEvent extends BukkitRunnable {
         }
 
         if (!player.getInventory().contains(Material.DIAMOND, diamondCost)) {
-            cancel(String.format("You need at least %s diamonds to go to this location.", diamondCost));
+            cancel(String.format("You need at least %s diamond%s to go to this location.", diamondCost, diamondCost > 1 ? "s" : ""));
+            return;
+        }
+        double distanceFromLocation = player.getLocation().distance(from.getTeleportLocation().getLocation());
+
+        if (distanceFromLocation > 6) {
+            cancel("You are too far from the module, move closer.");
             return;
         }
         TeleportModuleCooldownService cooldownService = plugin.getCooldownService();
@@ -89,7 +95,7 @@ public class TeleportToModuleEvent extends BukkitRunnable {
                 .add(RandomUtils.nextBoolean() ? -.5 : 1.5, 0, RandomUtils.nextBoolean() ? -.5 : 1.5);
 
         player.teleport(teleportLocation);
-        player.sendMessage(String.format("The module consumes %s diamonds.", diamondCost));
+        player.sendMessage(String.format("The module consumes %s diamond%s.", diamondCost, diamondCost > 1 ? "s" : ""));
     }
 
     private void cancel(String message) {

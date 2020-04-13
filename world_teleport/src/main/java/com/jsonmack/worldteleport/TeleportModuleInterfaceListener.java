@@ -102,12 +102,18 @@ public class TeleportModuleInterfaceListener implements Listener {
             player.sendMessage("You are at this teleport module and therefore cannot teleport to it.");
             return;
         }
+        double distanceFromLocation = player.getLocation().distance(openModule.getTeleportLocation().getLocation());
+
+        if (distanceFromLocation > 6) {
+            player.sendMessage("You are too far from the module, move closer.");
+            return;
+        }
         final int distance = (int) openModule.getTeleportLocation().getLocation().distance(module.getTeleportLocation().getLocation());
 
         final int diamondCost = Math.max(1, distance / plugin.getTeleportModuleConfig().getTilesPerDiamond());
 
         if (!player.getInventory().contains(Material.DIAMOND, diamondCost)) {
-            player.sendMessage(String.format("You need at least %s diamonds to teleport to this module.", diamondCost));
+            player.sendMessage(String.format("You need at least %s diamond%s to teleport to this module.", diamondCost, diamondCost > 1 ? "s" : ""));
             event.setCancelled(true);
             return;
         }
