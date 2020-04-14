@@ -4,6 +4,7 @@ import com.jsonmack.mcplugins.config.Config;
 import com.jsonmack.mcplugins.config.field.ConfigField;
 import com.jsonmack.worldteleport.TeleportModule;
 import com.jsonmack.worldteleport.config.field.CooldownDurationFieldListener;
+import com.jsonmack.worldteleport.config.field.CooldownEnabledFieldListener;
 import com.jsonmack.worldteleport.config.field.CooldownUnitFieldListener;
 import com.jsonmack.worldteleport.config.field.TilesPerDiamondFieldListener;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
@@ -19,15 +20,16 @@ public class TeleportModuleConfig implements Config, ConfigurationSerializable {
 
     private static final TeleportModuleConfig DEFAULT_CONFIG = new TeleportModuleConfig(1_000, 60, TimeUnit.SECONDS, true);
 
-    @ConfigField(value = TilesPerDiamondFieldListener.class)
+    @ConfigField(TilesPerDiamondFieldListener.class)
     private final int tilesPerDiamond;
 
-    @ConfigField(value = CooldownDurationFieldListener.class)
+    @ConfigField(CooldownDurationFieldListener.class)
     private final long cooldownDuration;
 
-    @ConfigField(value = CooldownUnitFieldListener.class)
+    @ConfigField(CooldownUnitFieldListener.class)
     private final TimeUnit cooldownUnit;
 
+    @ConfigField(CooldownEnabledFieldListener.class)
     private final boolean cooldownEnabled;
 
     public TeleportModuleConfig(int tilesPerDiamond, long cooldownDuration, TimeUnit cooldownUnit, boolean cooldownEnabled) {

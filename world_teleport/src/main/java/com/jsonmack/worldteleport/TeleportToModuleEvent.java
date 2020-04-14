@@ -75,9 +75,9 @@ public class TeleportToModuleEvent extends BukkitRunnable {
         }
         TeleportModuleCooldownService cooldownService = plugin.getCooldownService();
 
-        if (cooldownService.isOnCooldown(player.getUniqueId())) {
-            TeleportModuleConfig config = plugin.getTeleportModuleConfig();
+        TeleportModuleConfig config = plugin.getTeleportModuleConfig();
 
+        if (config.isCooldownEnabled() && config.getCooldownDuration() > 0 && cooldownService.isOnCooldown(player.getUniqueId())) {
             long difference = TimeUnit.NANOSECONDS.convert(config.getCooldownDuration(), config.getCooldownUnit())
                     - cooldownService.cooldownRemainingNano(player.getUniqueId());
 

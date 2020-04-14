@@ -13,6 +13,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,15 +57,23 @@ final class ConfigListenerCollectorImpl<T extends Config> implements ConfigField
                 Class<? extends ConfigFieldListener<?, ?>> listenerClass = configField.value();
 
                 if (!Modifier.isPublic(listenerClass.getModifiers())) {
-                    throw new ConfigServiceBuildException(String.format("The class %s must be defined with a public modifier.", listenerClass.getSimpleName()));
+                    throw new ConfigServiceBuildException(
+                            String.format("The class %s must be defined with a public modifier.", listenerClass.getSimpleName()));
                 }
                 Type listenerClassInterfaceClass = listenerClass.getGenericInterfaces()[0];
 
                 if (listenerClassInterfaceClass == null) {
                     throw new ConfigServiceBuildException(String.format("Listener class does not implement %s.", ConfigFieldListener.class.getSimpleName()));
                 }
+                //TODO Replace the following with a method to prevent ArrayIndexOutOfBoundsException
+                if (listenerClass.getInterfaces().length > 0) {
+                    if (listenerClass.getInterfaces()[0].getGenericInterfaces().length > 0) {
+                        listenerClassInterfaceClass = listenerClass.getInterfaces()[0].getGenericInterfaces()[0];
+                    }
+                }
                 Type[] listenerClassInterfaceClassTypes = ((ParameterizedType) listenerClassInterfaceClass).getActualTypeArguments();
 
+                //TODO Replace with smarter way to find the non-config parameter index.
                 Type listenerClassInterfaceClassType = listenerClassInterfaceClassTypes[LISTENER_CLASS_TYPE_PARAMETER_INDEX];
 
                 Type fieldType = field.getType().isPrimitive() ? ClassUtils.primitiveToWrapper(field.getType()) : field.getType();

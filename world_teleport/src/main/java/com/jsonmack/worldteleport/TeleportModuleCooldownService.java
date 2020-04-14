@@ -35,10 +35,6 @@ public class TeleportModuleCooldownService {
         return System.nanoTime() - cooldownTimestamp < TimeUnit.NANOSECONDS.convert(config.getCooldownDuration(), config.getCooldownUnit());
     }
 
-    public void clear() {
-        cooldownTimestamps.clear();
-    }
-
     public void removeIfExists(UUID player) {
         cooldownTimestamps.remove(player);
     }
