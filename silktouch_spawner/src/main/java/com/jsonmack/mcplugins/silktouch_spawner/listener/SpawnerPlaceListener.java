@@ -4,15 +4,18 @@ import com.jsonmack.mcplugins.silktouch_spawner.SilkTouchSpawnerPlugin;
 import com.jsonmack.mcplugins.silktouch_spawner.key.SpawnerNamespacedKey;
 import com.jsonmack.mcplugins.silktouch_spawner.key.SpawnerNamespacedKeySet;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -40,16 +43,25 @@ public class SpawnerPlaceListener implements Listener {
 
         if (meta == null) {
             //TODO something went wrong, handle this edge-case
-            throw new IllegalStateException("This shouldnt happen.");
+            throw new IllegalStateException("This shouldn't happen.");
         }
         SpawnerNamespacedKeySet keySet = plugin.getSpawnerNamespacedKeySet();
 
         PersistentDataContainer container = meta.getPersistentDataContainer();
 
-        if (container.isEmpty()) {
+        NamespacedKey typeKey = keySet.getNamespacedKey(SpawnerNamespacedKey.TYPE);
+
+        NamespacedKey remainingAmount = keySet.getNamespacedKey(SpawnerNamespacedKey.SPAWNS_REMAINING);
+
+        if (container.has(typeKey, PersistentDataType.STRING)) {
+            String type = container.get(typeKey, PersistentDataType.STRING);
+
+            block.setMetadata("type", new FixedMetadataValue(plugin, type));
+            block.setMetadata("amountOfSpawns", new FixedMetadataValue(plugin, container.get(remainingAmount, PersistentDataType.INTEGER)));
+
             CreatureSpawner spawner = (CreatureSpawner) block.getState();
 
-            spawner.setSpawnedType(EntityType.SKELETON);
+            spawner.setSpawnedType(EntityType.valueOf(type));
             spawner.update(false);
             return;
         }
@@ -65,6 +77,7 @@ public class SpawnerPlaceListener implements Listener {
         CreatureSpawner creatureSpawner = (CreatureSpawner) blockState;
 
         creatureSpawner.setSpawnedType(entityType);
+        creatureSpawner.update(false);
     }
 
 }

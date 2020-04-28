@@ -23,6 +23,8 @@
         <module>api</module>
         <module>silktouch_spawner</module>
         <module>world_teleport</module>
+        <module>slayer</module>
+        <module>hardcore-days</module>
     </modules>
 
     <build>

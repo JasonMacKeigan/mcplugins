@@ -3,7 +3,7 @@ package com.jsonmack.mcplugins.silktouch_spawner.listener;
 import com.jsonmack.mcplugins.silktouch_spawner.SilkTouchSpawnerPlugin;
 import com.jsonmack.mcplugins.silktouch_spawner.key.SpawnerNamespacedKey;
 import com.jsonmack.mcplugins.silktouch_spawner.key.SpawnerNamespacedKeySet;
-import com.sun.tools.javac.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -17,8 +17,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Collections;
 
@@ -64,20 +64,32 @@ public class SpawnerBreakListener implements Listener {
         ItemMeta spawnerMeta = spawner.getItemMeta();
 
         if (spawnerMeta == null) {
-            throw new IllegalStateException("meta is null :/");
+            throw new IllegalStateException("Unexpected error, ItemMeta is null.");
         }
         SpawnerNamespacedKeySet keySet = plugin.getSpawnerNamespacedKeySet();
 
-        String spawnName = StringUtils.toUpperCase(creatureSpawner.getSpawnedType().name().toLowerCase());
+        String spawnName = StringUtils.capitalize(creatureSpawner.getSpawnedType().name().toLowerCase());
 
-        System.out.println("meta: " + spawnerMeta);
+        PersistentDataContainer container = spawnerMeta.getPersistentDataContainer();
 
-        spawnerMeta.setLore(Collections.singletonList(String.format("Drop to spawn a %s%s.", ChatColor.GREEN, spawnName)));
+        NamespacedKey typeKey = keySet.getNamespacedKey(SpawnerNamespacedKey.TYPE);
+
+        NamespacedKey spawnsRemaining = keySet.getNamespacedKey(SpawnerNamespacedKey.SPAWNS_REMAINING);
+
+        if (!container.has(typeKey, PersistentDataType.STRING)) {
+            container.set(typeKey, PersistentDataType.STRING, creatureSpawner.getSpawnedType().name());
+        }
+        if (!container.has(spawnsRemaining, PersistentDataType.INTEGER)) {
+            container.set(spawnsRemaining, PersistentDataType.INTEGER, plugin.getSpawnerConfig().getAmountOfSpawns());
+        }
+        int remaining = container.getOrDefault(spawnsRemaining, PersistentDataType.INTEGER, 0);
+
+        int percentage = (int) ((double) remaining / plugin.getSpawnerConfig().getAmountOfSpawns() * 100D);
+
+        spawnerMeta.setLore(Collections.singletonList(String.format("Remaining: %s%s",
+                percentage > 75 ? ChatColor.GREEN : percentage > 25 ? ChatColor.YELLOW : ChatColor.RED, remaining)));
 
         spawnerMeta.setDisplayName(String.format("%s Spawner", spawnName));
-
-        spawnerMeta.getPersistentDataContainer().set(keySet.getNamespacedKey(SpawnerNamespacedKey.TYPE),
-                PersistentDataType.STRING, creatureSpawner.getSpawnedType().name());
 
         spawner.setItemMeta(spawnerMeta);
 

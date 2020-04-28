@@ -9,4 +9,4 @@ commands:
   spawner:
     usage: "/<spawner> <type>"
     permission: "op"
-    description: "Create a spawner of a certain type at this location."
+    description: "List or change the configuration values for this plugin."
