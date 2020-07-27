@@ -24,12 +24,6 @@ import java.util.stream.Collectors;
  */
 final class ConfigListenerCollectorImpl<T extends Config> implements ConfigFieldListenerCollector<T> {
 
-//    private static final Configuration REFLECTION_CONFIGURATION = new ConfigurationBuilder()
-//            .addScanners(new FieldAnnotationsScanner())
-//            .addUrls(ClasspathHelper.forManifest())
-//            .setExecutorService(Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()))
-//            .forPackages(".");
-
     private static final int LISTENER_CLASS_TYPE_PARAMETER_INDEX = 1;
 
     @SuppressWarnings("unchecked")
