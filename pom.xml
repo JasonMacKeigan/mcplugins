@@ -25,6 +25,7 @@
         <module>world_teleport</module>
         <module>slayer</module>
         <module>hardcore-days</module>
+        <module>chest_owner</module>
     </modules>
 
     <build>
